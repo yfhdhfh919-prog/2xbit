@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الصاروخ | Crash</title>
+    <title>لعبة الطائرة | Crash</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 100%);
+            background: linear-gradient(135deg, #0a0a1a 0%, #15152b 100%);
             color: #fff;
             min-height: 100vh;
             padding: 10px;
@@ -22,6 +22,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
         }
         
         .container {
@@ -37,10 +38,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(20, 20, 50, 0.9);
-            border-radius: 15px;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 12px;
             padding: 15px 25px;
-            border: 2px solid #3a3a6a;
+            border: 1px solid #3a3a6a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .logo {
@@ -70,10 +72,11 @@
         }
         
         .balance-box {
-            background: linear-gradient(90deg, #2a5a2a, #1e441e);
+            background: linear-gradient(90deg, #1a472a, #0f3b1f);
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
+            border: 1px solid #2a6a3a;
         }
         
         .balance-label {
@@ -90,13 +93,14 @@
         .user-avatar {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd700);
+            background: linear-gradient(135deg, #4a4a8a, #3a3a6a);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
             font-size: 20px;
+            border: 2px solid #5a5aaa;
         }
         
         /* منطقة اللعبة الرئيسية */
@@ -109,20 +113,22 @@
         .left-panel {
             flex: 1;
             min-width: 280px;
-            background: rgba(20, 20, 50, 0.8);
-            border-radius: 15px;
+            background: rgba(25, 25, 45, 0.9);
+            border-radius: 12px;
             padding: 20px;
-            border: 2px solid #3a3a6a;
+            border: 1px solid #3a3a6a;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .current-round {
-            background: rgba(10, 10, 30, 0.9);
-            border-radius: 10px;
+            background: rgba(15, 15, 35, 0.9);
+            border-radius: 8px;
             padding: 15px;
             text-align: center;
+            border: 1px solid #4a4a8a;
         }
         
         .round-title {
@@ -147,9 +153,10 @@
         }
         
         .bet-controls {
-            background: rgba(10, 10, 30, 0.9);
-            border-radius: 10px;
+            background: rgba(15, 15, 35, 0.9);
+            border-radius: 8px;
             padding: 20px;
+            border: 1px solid #4a4a8a;
         }
         
         .bet-title {
@@ -169,14 +176,14 @@
         .bet-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
         
         .bet-btn {
             padding: 12px 5px;
-            background: rgba(40, 40, 80, 0.8);
-            border: 2px solid #4a4a8a;
-            border-radius: 8px;
+            background: rgba(35, 35, 65, 0.8);
+            border: 1px solid #5a5aaa;
+            border-radius: 6px;
             color: #fff;
             font-weight: 700;
             font-size: 16px;
@@ -185,7 +192,7 @@
         }
         
         .bet-btn:hover {
-            background: rgba(60, 60, 120, 0.8);
+            background: rgba(50, 50, 90, 0.8);
             transform: translateY(-2px);
         }
         
@@ -198,10 +205,10 @@
         .bet-input-container {
             display: flex;
             align-items: center;
-            background: rgba(30, 30, 60, 0.8);
-            border-radius: 8px;
+            background: rgba(25, 25, 55, 0.8);
+            border-radius: 6px;
             padding: 5px 15px;
-            border: 2px solid #4a4a8a;
+            border: 1px solid #5a5aaa;
         }
         
         .bet-input {
@@ -233,13 +240,15 @@
             align-items: center;
             background: rgba(30, 30, 60, 0.6);
             padding: 10px 15px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
         
         .auto-bet-row:hover {
             background: rgba(40, 40, 80, 0.8);
+            border-color: #5a5aaa;
         }
         
         .auto-bet-row.active {
@@ -250,14 +259,14 @@
         .action-buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
         
         .action-btn {
             padding: 18px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 900;
             font-size: 18px;
             cursor: pointer;
@@ -266,46 +275,52 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .place-bet-btn {
-            background: linear-gradient(135deg, #00cc66, #00aa44);
+            background: linear-gradient(135deg, #00aa44, #008833);
             color: white;
         }
         
         .place-bet-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #00dd77, #00bb55);
+            background: linear-gradient(135deg, #00bb55, #009944);
             box-shadow: 0 0 15px rgba(0, 204, 102, 0.5);
+            transform: translateY(-2px);
         }
         
         .cash-out-btn {
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #333;
+            background: linear-gradient(135deg, #ffaa00, #dd8800);
+            color: #222;
         }
         
         .cash-out-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #ffe733, #ffbb33);
+            background: linear-gradient(135deg, #ffbb33, #ff9900);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            transform: translateY(-2px);
         }
         
         .action-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
         }
         
         /* لوحة المضاعف */
         .multiplier-board {
             flex: 2;
             min-width: 500px;
-            background: rgba(10, 10, 30, 0.9);
-            border-radius: 15px;
+            background: rgba(15, 15, 35, 0.9);
+            border-radius: 12px;
             padding: 20px;
-            border: 2px solid #3a3a6a;
+            border: 1px solid #3a3a6a;
             display: flex;
             flex-direction: column;
             gap: 15px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .multiplier-header {
@@ -313,7 +328,7 @@
             justify-content: space-between;
             align-items: center;
             padding-bottom: 10px;
-            border-bottom: 2px solid #3a3a6a;
+            border-bottom: 1px solid #4a4a8a;
         }
         
         .multiplier-title {
@@ -324,23 +339,25 @@
         .next-round-timer {
             background: rgba(255, 107, 107, 0.2);
             padding: 8px 15px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 700;
             color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
         
         .multiplier-display {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             padding: 25px;
             text-align: center;
             position: relative;
-            height: 180px;
+            height: 250px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            border: 1px solid #4a4a8a;
         }
         
         .current-multiplier {
@@ -349,6 +366,7 @@
             color: #00ff00;
             text-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
             margin-bottom: 10px;
+            transition: all 0.2s ease;
         }
         
         .multiplier-label {
@@ -356,108 +374,159 @@
             color: #aaa;
         }
         
-        .rocket-container {
-            position: absolute;
-            right: 30px;
-            bottom: 30px;
-            z-index: 5;
-        }
-        
-        .rocket {
-            width: 100px;
-            height: 150px;
-            position: relative;
-            transform: translateY(0);
-            transition: transform 0.5s ease;
-        }
-        
-        .rocket-body {
-            width: 70px;
-            height: 120px;
-            background: linear-gradient(135deg, #ff3b3b 0%, #ff6b6b 100%);
-            border-radius: 10px 10px 5px 5px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .rocket-top {
-            width: 0;
-            height: 0;
-            border-left: 35px solid transparent;
-            border-right: 35px solid transparent;
-            border-bottom: 50px solid #ff6b6b;
-            position: absolute;
-            top: -50px;
-            left: 0;
-        }
-        
-        .rocket-window {
-            width: 30px;
-            height: 30px;
-            background: #87ceeb;
-            border-radius: 50%;
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 3px solid #1a1a3e;
-        }
-        
-        .rocket-fin {
+        /* منطقة الطائرة والمسار */
+        .flight-track {
             position: absolute;
             bottom: 0;
-            width: 18px;
-            height: 50px;
-            background: #ff3b3b;
-            border-radius: 5px;
-        }
-        
-        .fin-left {
             left: 0;
-            transform: skew(10deg);
+            width: 100%;
+            height: 180px;
+            z-index: 1;
+            overflow: hidden;
         }
         
-        .fin-right {
-            right: 0;
-            transform: skew(-10deg);
-        }
-        
-        .flame {
+        .track-path {
             position: absolute;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 80px;
-            background: linear-gradient(to bottom, #ffd700, #ff4500, #8b0000);
-            border-radius: 50% 50% 20% 20%;
-            animation: flame-animation 0.2s infinite alternate;
-            filter: blur(3px);
-            opacity: 0.9;
+            bottom: 50px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
         
-        @keyframes flame-animation {
-            0% { height: 70px; opacity: 0.8; }
-            100% { height: 90px; opacity: 1; }
+        .track-markers {
+            position: absolute;
+            bottom: 45px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
+        
+        .track-marker {
+            position: absolute;
+            bottom: 0;
+            width: 2px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .track-label {
+            position: absolute;
+            bottom: -20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            transform: translateX(-50%);
+        }
+        
+        .airplane-container {
+            position: absolute;
+            bottom: 40px;
+            left: 10%;
+            z-index: 10;
+            transition: left 0.1s linear, bottom 0.1s linear;
+        }
+        
+        .airplane {
+            width: 60px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: transform 0.2s ease;
+        }
+        
+        .airplane-body {
+            width: 50px;
+            height: 12px;
+            background: linear-gradient(135deg, #4a7aff, #2a5aff);
+            border-radius: 4px 10px 10px 4px;
+            position: relative;
+        }
+        
+        .airplane-wing {
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            width: 20px;
+            height: 8px;
+            background: linear-gradient(135deg, #3a6aff, #1a4aff);
+            border-radius: 4px;
+            transform: rotate(-5deg);
+        }
+        
+        .airplane-tail {
+            position: absolute;
+            top: 2px;
+            left: -8px;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #3a6aff, #1a4aff);
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+        
+        .airplane-window {
+            position: absolute;
+            top: 2px;
+            left: 35px;
+            width: 6px;
+            height: 6px;
+            background: #aaddff;
+            border-radius: 50%;
+        }
+        
+        .engine-flame {
+            position: absolute;
+            right: -12px;
+            top: 4px;
+            width: 15px;
+            height: 8px;
+            background: linear-gradient(to right, #ffaa00, #ff5500, #ff0000);
+            border-radius: 0 4px 4px 0;
+            animation: flame-pulse 0.3s infinite alternate;
+            filter: blur(1px);
+        }
+        
+        @keyframes flame-pulse {
+            0% { width: 12px; opacity: 0.7; }
+            100% { width: 18px; opacity: 1; }
         }
         
         .explosion {
             position: absolute;
-            width: 300px;
-            height: 300px;
             border-radius: 50%;
-            background: radial-gradient(circle, #ffd700 0%, #ff4500 50%, transparent 70%);
             opacity: 0;
             pointer-events: none;
-            z-index: 10;
+            z-index: 20;
+            background: radial-gradient(circle, #ffd700 0%, #ff4500 50%, transparent 70%);
+            mix-blend-mode: screen;
+        }
+        
+        .explosion-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffaa00, #ff5500);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 15;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: 2;
         }
         
         .multiplier-history {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
             padding: 15px;
-            max-height: 150px;
+            max-height: 120px;
             overflow-y: auto;
+            border: 1px solid #4a4a8a;
         }
         
         .history-title {
@@ -469,37 +538,42 @@
         .history-items {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         
         .history-item {
             background: rgba(40, 40, 80, 0.8);
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 6px 10px;
+            border-radius: 5px;
             font-weight: 700;
-            min-width: 70px;
+            min-width: 65px;
             text-align: center;
+            font-size: 14px;
         }
         
         .history-item.low {
             color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
         }
         
         .history-item.medium {
             color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
         }
         
         .history-item.high {
             color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
         }
         
         /* لوحة اللاعبين */
         .players-board {
-            background: rgba(20, 20, 50, 0.8);
-            border-radius: 15px;
+            background: rgba(25, 25, 45, 0.9);
+            border-radius: 12px;
             padding: 20px;
-            border: 2px solid #3a3a6a;
+            border: 1px solid #3a3a6a;
             margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .players-title {
@@ -517,30 +591,33 @@
             border-radius: 6px;
             font-size: 16px;
             color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
         
         .players-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 10px;
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
             padding-right: 5px;
         }
         
         .player-item {
-            background: rgba(30, 30, 60, 0.6);
-            border-radius: 8px;
+            background: rgba(35, 35, 65, 0.6);
+            border-radius: 6px;
             padding: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
         
         .player-item:hover {
-            background: rgba(40, 40, 80, 0.8);
+            background: rgba(45, 45, 75, 0.8);
             transform: translateY(-2px);
+            border-color: #5a5aaa;
         }
         
         .player-info {
@@ -552,13 +629,14 @@
         .player-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #4a4a8a, #3a3a6a);
+            background: linear-gradient(135deg, #5a5aaa, #4a4a9a);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 16px;
+            border: 1px solid #6a6aba;
         }
         
         .player-name {
@@ -584,6 +662,7 @@
         .player-cashed-out {
             color: #ffd700;
             font-weight: 700;
+            font-size: 14px;
         }
         
         /* رسائل */
@@ -595,7 +674,7 @@
             background: linear-gradient(135deg, #ff6b6b 0%, #ff3b3b 100%);
             color: white;
             padding: 15px 30px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 700;
             font-size: 18px;
             z-index: 100;
@@ -603,6 +682,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .notification.show {
@@ -612,8 +692,8 @@
         /* تأثيرات */
         .coin-effect {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             background: radial-gradient(circle at 30% 30%, #ffd700, #daa520);
             border-radius: 50%;
             display: flex;
@@ -622,8 +702,9 @@
             font-weight: 700;
             color: #996600;
             z-index: 5;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
             pointer-events: none;
+            font-size: 12px;
         }
         
         /* التكيف مع الشاشات الصغيرة */
@@ -638,16 +719,6 @@
             
             .current-multiplier {
                 font-size: 50px;
-            }
-            
-            .rocket-container {
-                right: 10px;
-                bottom: 10px;
-            }
-            
-            .rocket {
-                width: 70px;
-                height: 120px;
             }
         }
         
@@ -672,7 +743,7 @@
         
         /* شريط التمرير */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         
         ::-webkit-scrollbar-track {
@@ -695,8 +766,8 @@
         <!-- رأس اللعبة -->
         <div class="game-header">
             <div class="logo">
-                <div class="logo-icon"><i class="fas fa-rocket"></i></div>
-                <div class="logo-text">CRASH ROCKET</div>
+                <div class="logo-icon"><i class="fas fa-plane"></i></div>
+                <div class="logo-text">CRASH PLANE</div>
             </div>
             
             <div class="user-info">
@@ -767,7 +838,7 @@
                 </div>
             </div>
             
-            <!-- لوحة المضاعف والصاروخ -->
+            <!-- لوحة المضاعف والطائرة -->
             <div class="multiplier-board">
                 <div class="multiplier-header">
                     <div class="multiplier-title">المضاعف الحالي</div>
@@ -776,23 +847,28 @@
                 
                 <div class="multiplier-display">
                     <div class="current-multiplier" id="currentMultiplier">1.00x</div>
-                    <div class="multiplier-label">الوقت للسحب قبل الانفجار!</div>
+                    <div class="multiplier-label" id="multiplierLabel">انتظار بدء الجولة...</div>
                     
-                    <!-- الصاروخ -->
-                    <div class="rocket-container">
-                        <div class="rocket" id="rocket">
-                            <div class="rocket-top"></div>
-                            <div class="rocket-body">
-                                <div class="rocket-window"></div>
+                    <!-- منطقة المسار والطائرة -->
+                    <div class="flight-track">
+                        <div class="track-path"></div>
+                        <div class="track-markers" id="trackMarkers"></div>
+                        
+                        <!-- السحب -->
+                        <div class="clouds-container" id="cloudsContainer"></div>
+                        
+                        <!-- الطائرة -->
+                        <div class="airplane-container" id="airplaneContainer">
+                            <div class="airplane">
+                                <div class="airplane-body">
+                                    <div class="airplane-wing"></div>
+                                    <div class="airplane-tail"></div>
+                                    <div class="airplane-window"></div>
+                                    <div class="engine-flame" id="engineFlame"></div>
+                                </div>
                             </div>
-                            <div class="rocket-fin fin-left"></div>
-                            <div class="rocket-fin fin-right"></div>
-                            <div class="flame" id="flame"></div>
                         </div>
                     </div>
-                    
-                    <!-- الانفجار -->
-                    <div class="explosion" id="explosion"></div>
                 </div>
                 
                 <div class="multiplier-history">
@@ -808,7 +884,7 @@
         <div class="players-board">
             <div class="players-title">
                 <span>اللاعبون النشطون</span>
-                <span class="players-count" id="playersCount">8 لاعبين</span>
+                <span class="players-count" id="playersCount2">8 لاعبين</span>
             </div>
             
             <div class="players-list" id="playersList">
@@ -821,7 +897,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // بيانات اللعبة
+        // ========== بيانات اللعبة ==========
         const gameData = {
             balance: 10000,
             currentBet: 100,
@@ -834,8 +910,9 @@
             explosionPoint: 0,
             roundTimer: 10,
             roundInterval: null,
+            flightInterval: null,
             autoCashOut: 0,
-            history: [12.46, 1.85, 5.32, 2.14, 8.96, 3.45, 1.23, 15.67, 2.89, 4.12],
+            history: [1.23, 2.15, 5.32, 1.85, 3.45, 8.96, 2.14, 12.46, 1.67, 4.12],
             players: [
                 { id: 1, name: "53******", bet: 8079.68, multiplier: 1.85, cashedOut: false, avatar: "53" },
                 { id: 2, name: "47******", bet: 5244.51, multiplier: 2.32, cashedOut: false, avatar: "47" },
@@ -845,22 +922,35 @@
                 { id: 6, name: "61******", bet: 748.52, multiplier: 7.21, cashedOut: false, avatar: "61" },
                 { id: 7, name: "41******", bet: 1353.67, multiplier: 2.78, cashedOut: false, avatar: "41" },
                 { id: 8, name: "91******", bet: 1637.69, multiplier: 4.33, cashedOut: true, avatar: "91" }
-            ]
+            ],
+            // توزيع الانفجارات - غالبية الانفجارات تكون في مضاعفات منخفضة
+            explosionDistribution: {
+                "1.10-1.50": 0.35,  // 35% انفجار بين 1.10x و 1.50x
+                "1.51-2.00": 0.25,  // 25% انفجار بين 1.51x و 2.00x
+                "2.01-3.00": 0.20,  // 20% انفجار بين 2.01x و 3.00x
+                "3.01-5.00": 0.12,  // 12% انفجار بين 3.01x و 5.00x
+                "5.01-10.00": 0.06, // 6% انفجار بين 5.01x و 10.00x
+                "10.01+": 0.02      // 2% انفجار فوق 10.01x
+            }
         };
         
-        // العناصر الرئيسية في DOM
+        // ========== العناصر الرئيسية في DOM ==========
         const balanceEl = document.getElementById('balance');
         const roundNumberEl = document.getElementById('roundNumber');
         const playersCountEl = document.getElementById('playersCount');
+        const playersCount2El = document.getElementById('playersCount2');
         const currentMultiplierEl = document.getElementById('currentMultiplier');
+        const multiplierLabelEl = document.getElementById('multiplierLabel');
         const nextRoundTimerEl = document.getElementById('nextRoundTimer');
         const betInput = document.getElementById('betInput');
         const placeBetBtn = document.getElementById('placeBetBtn');
         const cashOutBtn = document.getElementById('cashOutBtn');
         const betButtons = document.querySelectorAll('.bet-btn');
-        const rocket = document.getElementById('rocket');
-        const flame = document.getElementById('flame');
-        const explosion = document.getElementById('explosion');
+        const airplaneContainer = document.getElementById('airplaneContainer');
+        const airplane = document.querySelector('.airplane');
+        const engineFlame = document.getElementById('engineFlame');
+        const trackMarkersEl = document.getElementById('trackMarkers');
+        const cloudsContainer = document.getElementById('cloudsContainer');
         const historyItemsEl = document.getElementById('historyItems');
         const playersListEl = document.getElementById('playersList');
         const notificationEl = document.getElementById('notification');
@@ -868,16 +958,18 @@
         const autoBet2 = document.getElementById('autoBet2');
         const autoBet3 = document.getElementById('autoBet3');
         
-        // تهيئة اللعبة
+        // ========== تهيئة اللعبة ==========
         function initGame() {
             updateUI();
+            createTrackMarkers();
+            createClouds();
             createHistoryItems();
             createPlayersList();
             startRoundTimer();
             setupEventListeners();
         }
         
-        // إعداد مستمعي الأحداث
+        // ========== إعداد مستمعي الأحداث ==========
         function setupEventListeners() {
             // أزرار الرهان
             betButtons.forEach(btn => {
@@ -906,13 +998,29 @@
             autoBet1.addEventListener('click', () => setAutoCashOut(2.00));
             autoBet2.addEventListener('click', () => setAutoCashOut(5.00));
             autoBet3.addEventListener('click', () => setAutoCashOut(10.00));
+            
+            // اختصارات لوحة المفاتيح
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !gameData.isBetPlaced && placeBetBtn.disabled === false) {
+                    placeBet();
+                } else if (e.code === 'Enter' && cashOutBtn.disabled === false) {
+                    cashOut();
+                } else if (e.code === 'Digit1') {
+                    setBet(100);
+                } else if (e.code === 'Digit2') {
+                    setBet(500);
+                } else if (e.code === 'Digit3') {
+                    setBet(1000);
+                }
+            });
         }
         
-        // تحديث واجهة المستخدم
+        // ========== تحديث واجهة المستخدم ==========
         function updateUI() {
             balanceEl.textContent = gameData.balance.toLocaleString();
             roundNumberEl.textContent = `#${gameData.roundNumber}`;
-            playersCountEl.textContent = `${gameData.playersCount} لاعبين`;
+            playersCountEl.textContent = `${gameData.playersCount}`;
+            playersCount2El.textContent = `${gameData.playersCount} لاعبين`;
             currentMultiplierEl.textContent = `${gameData.currentMultiplier.toFixed(2)}x`;
             betInput.value = gameData.currentBet;
             
@@ -927,7 +1035,7 @@
             updateMultiplierColor();
         }
         
-        // تحديث أزرار الرهان
+        // ========== تحديث أزرار الرهان ==========
         function updateBetButtons() {
             betButtons.forEach(btn => {
                 const bet = parseInt(btn.dataset.bet);
@@ -939,22 +1047,76 @@
             });
         }
         
-        // تحديث لون المضاعف
+        // ========== تحديث لون المضاعف ==========
         function updateMultiplierColor() {
             let color;
-            if (gameData.currentMultiplier < 2) {
+            if (gameData.currentMultiplier < 1.5) {
                 color = '#ff6b6b'; // أحمر
-            } else if (gameData.currentMultiplier < 5) {
+            } else if (gameData.currentMultiplier < 3) {
                 color = '#ffd700'; // أصفر
+            } else if (gameData.currentMultiplier < 6) {
+                color = '#aaff00'; // أخضر فاتح
             } else {
-                color = '#00ff00'; // أخضر
+                color = '#00ff00'; // أخضر نيون
             }
             
             currentMultiplierEl.style.color = color;
             currentMultiplierEl.style.textShadow = `0 0 20px ${color}80`;
         }
         
-        // إنشاء عناصر التاريخ
+        // ========== إنشاء علامات المسار ==========
+        function createTrackMarkers() {
+            trackMarkersEl.innerHTML = '';
+            
+            // إنشاء علامات كل 0.5x
+            for (let i = 1; i <= 20; i += 0.5) {
+                const marker = document.createElement('div');
+                marker.className = 'track-marker';
+                
+                // حساب الموضع النسبي (من 1x إلى 20x)
+                const percentage = Math.min(100, ((i - 1) / 19) * 100);
+                marker.style.left = `${percentage}%`;
+                
+                // إضافة تسمية كل مضاعف صحيح
+                if (i % 1 === 0) {
+                    const label = document.createElement('div');
+                    label.className = 'track-label';
+                    label.textContent = `${i}x`;
+                    label.style.left = `${percentage}%`;
+                    trackMarkersEl.appendChild(label);
+                }
+                
+                trackMarkersEl.appendChild(marker);
+            }
+        }
+        
+        // ========== إنشاء السحب ==========
+        function createClouds() {
+            cloudsContainer.innerHTML = '';
+            
+            // إنشاء سحب عشوائية
+            for (let i = 0; i < 8; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                
+                // حجم عشوائي
+                const size = Math.random() * 60 + 30;
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size * 0.6}px`;
+                
+                // موضع عشوائي في المسار
+                const left = Math.random() * 90 + 5;
+                const top = Math.random() * 100;
+                
+                cloud.style.left = `${left}%`;
+                cloud.style.top = `${top}%`;
+                cloud.style.opacity = Math.random() * 0.3 + 0.1;
+                
+                cloudsContainer.appendChild(cloud);
+            }
+        }
+        
+        // ========== إنشاء عناصر التاريخ ==========
         function createHistoryItems() {
             historyItemsEl.innerHTML = '';
             
@@ -975,7 +1137,7 @@
             });
         }
         
-        // إنشاء قائمة اللاعبين
+        // ========== إنشاء قائمة اللاعبين ==========
         function createPlayersList() {
             playersListEl.innerHTML = '';
             
@@ -989,7 +1151,7 @@
                         <div class="player-name">${player.name}</div>
                     </div>
                     <div class="player-stats">
-                        <div class="player-bet">${player.bet.toFixed(2)} EGP</div>
+                        <div class="player-bet">${player.bet.toLocaleString()} EGP</div>
                         ${player.cashedOut ? 
                             `<div class="player-cashed-out">سحب @ ${player.multiplier.toFixed(2)}x</div>` : 
                             `<div class="player-multiplier">${player.multiplier.toFixed(2)}x</div>`
@@ -1001,7 +1163,7 @@
             });
         }
         
-        // تعيين قيمة الرهان
+        // ========== تعيين قيمة الرهان ==========
         function setBet(bet) {
             if (gameData.isBetPlaced || gameData.isRoundActive) return;
             
@@ -1010,7 +1172,7 @@
             updateUI();
         }
         
-        // تعيين السحب التلقائي
+        // ========== تعيين السحب التلقائي ==========
         function setAutoCashOut(multiplier) {
             if (gameData.isBetPlaced) return;
             
@@ -1026,7 +1188,39 @@
             showNotification(`تم ضبط السحب التلقائي عند مضاعف ${multiplier}x`);
         }
         
-        // وضع الرهان
+        // ========== توليد نقطة انفجار واقعية ==========
+        function generateExplosionPoint() {
+            const rand = Math.random();
+            let cumulative = 0;
+            
+            for (const [range, probability] of Object.entries(gameData.explosionDistribution)) {
+                cumulative += probability;
+                
+                if (rand <= cumulative) {
+                    const [minStr, maxStr] = range.split('-').map(str => {
+                        if (str.endsWith('+')) return parseFloat(str);
+                        return parseFloat(str);
+                    });
+                    
+                    const min = parseFloat(minStr);
+                    const max = typeof maxStr === 'string' && maxStr.endsWith('+') ? 100 : parseFloat(maxStr);
+                    
+                    // توليد قيمة عشوائية ضمن النطاق
+                    if (typeof maxStr === 'string' && maxStr.endsWith('+')) {
+                        // إذا كان النطاق مفتوحًا (مثل 10.01+)
+                        return min + Math.random() * 10; // قيمة أعلى من الحد الأدنى
+                    } else {
+                        // نطاق مغلق
+                        return min + Math.random() * (max - min);
+                    }
+                }
+            }
+            
+            // افتراضي: قيمة بين 1.10 و 3.00
+            return 1.10 + Math.random() * 1.90;
+        }
+        
+        // ========== وضع الرهان ==========
         function placeBet() {
             if (gameData.isBetPlaced || gameData.isRoundActive || gameData.balance < gameData.currentBet) return;
             
@@ -1056,15 +1250,16 @@
             updateUI();
             createPlayersList();
             
-            showNotification(`تم وضع الرهان: ${gameData.currentBet} EGP`);
+            showNotification(`تم وضع الرهان: ${gameData.currentBet.toLocaleString()} EGP`);
             
             // إذا كانت الجولة نشطة، تفعيل زر السحب
             if (gameData.isRoundActive) {
                 cashOutBtn.disabled = false;
+                multiplierLabelEl.textContent = "اضغط على سحب المكسب عندما تريد!";
             }
         }
         
-        // سحب المكسب
+        // ========== سحب المكسب ==========
         function cashOut() {
             if (!gameData.isBetPlaced || !gameData.isRoundActive) return;
             
@@ -1084,6 +1279,7 @@
             // تحديث حالة اللعبة
             gameData.isBetPlaced = false;
             gameData.cashOutMultiplier = gameData.currentMultiplier;
+            gameData.autoCashOut = 0; // إعادة تعيين السحب التلقائي
             
             // تحديث واجهة المستخدم
             updateUI();
@@ -1093,9 +1289,12 @@
             
             // تأثير العملات
             createCoinEffect(profit);
+            
+            // إعادة تعيين واجهة الرهان التلقائي
+            [autoBet1, autoBet2, autoBet3].forEach(el => el.classList.remove('active'));
         }
         
-        // بدء مؤقت الجولة
+        // ========== بدء مؤقت الجولة ==========
         function startRoundTimer() {
             if (gameData.roundInterval) clearInterval(gameData.roundInterval);
             
@@ -1113,26 +1312,27 @@
             }, 1000);
         }
         
-        // بدء جولة جديدة
+        // ========== بدء جولة جديدة ==========
         function startNewRound() {
             // تحديث حالة الجولة
             gameData.isRoundActive = true;
             gameData.currentMultiplier = 1.00;
             gameData.roundNumber++;
             
-            // تعيين نقطة الانفجار بشكل عشوائي (بين 1.10x و 20.00x)
-            gameData.explosionPoint = 1.10 + Math.random() * 18.90;
+            // توليد نقطة انفجار واقعية
+            gameData.explosionPoint = generateExplosionPoint();
             
-            // إعادة تعيين الصاروخ
-            rocket.style.transform = 'translateY(0)';
-            flame.style.display = 'block';
-            explosion.style.opacity = '0';
+            // إعادة تعيين الطائرة
+            airplaneContainer.style.left = '10%';
+            airplane.style.transform = 'rotate(0deg)';
+            engineFlame.style.display = 'block';
             
             // تحديث واجهة المستخدم
             updateUI();
+            multiplierLabelEl.textContent = "الطائرة تقلع! استعد للسحب!";
             
-            // بدء زيادة المضاعف
-            increaseMultiplier();
+            // بدء تحليق الطائرة
+            startFlight();
             
             // إعادة تعيين اللاعبين الذين لم يسحبوا
             gameData.players.forEach(player => {
@@ -1140,130 +1340,261 @@
                     player.multiplier = 0;
                 }
             });
+            
+            // تحديث قائمة اللاعبين
+            createPlayersList();
         }
         
-        // زيادة المضاعف
-        function increaseMultiplier() {
-            if (!gameData.isRoundActive) return;
+        // ========== بدء تحليق الطائرة ==========
+        function startFlight() {
+            if (gameData.flightInterval) clearInterval(gameData.flightInterval);
             
-            // زيادة المضاعف
-            gameData.currentMultiplier += 0.01;
-            
-            // تحريك الصاروخ للأعلى
-            const newY = Math.min(150, (gameData.currentMultiplier - 1) * 10);
-            rocket.style.transform = `translateY(-${newY}px)`;
-            
-            // التحقق من السحب التلقائي
-            if (gameData.isBetPlaced && gameData.autoCashOut > 0 && gameData.currentMultiplier >= gameData.autoCashOut) {
-                cashOut();
-                gameData.autoCashOut = 0;
-                [autoBet1, autoBet2, autoBet3].forEach(el => el.classList.remove('active'));
-            }
-            
-            // التحقق من الانفجار
-            if (gameData.currentMultiplier >= gameData.explosionPoint) {
-                endRound();
-                return;
-            }
-            
-            // تحديث واجهة المستخدم
-            updateUI();
-            
-            // الاستمرار في زيادة المضاعف
-            setTimeout(increaseMultiplier, 50);
+            gameData.flightInterval = setInterval(() => {
+                if (!gameData.isRoundActive) {
+                    clearInterval(gameData.flightInterval);
+                    return;
+                }
+                
+                // زيادة المضاعف بمعدلات مختلفة حسب المرحلة
+                let increment = 0.01;
+                
+                if (gameData.currentMultiplier < 1.5) {
+                    increment = 0.02; // أسرع في البداية
+                } else if (gameData.currentMultiplier < 3) {
+                    increment = 0.015;
+                } else if (gameData.currentMultiplier < 6) {
+                    increment = 0.01;
+                } else {
+                    increment = 0.005; // أبطأ في المضاعفات العالية
+                }
+                
+                gameData.currentMultiplier += increment;
+                
+                // تحريك الطائرة
+                const trackWidth = document.querySelector('.flight-track').offsetWidth;
+                const airplaneWidth = airplaneContainer.offsetWidth;
+                
+                // حساب الموضع النسبي (من 1x إلى 20x)
+                const maxMultiplier = 20;
+                const progress = Math.min(1, (gameData.currentMultiplier - 1) / (maxMultiplier - 1));
+                const newLeft = 10 + (progress * 80); // من 10% إلى 90%
+                
+                airplaneContainer.style.left = `${newLeft}%`;
+                
+                // إضافة اهتزاز بسيط للواقعية
+                const shakeX = Math.sin(gameData.currentMultiplier * 0.5) * 2;
+                const shakeY = Math.cos(gameData.currentMultiplier * 0.3) * 1;
+                airplaneContainer.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+                
+                // تدوير الطائرة قليلاً عند المنعطفات
+                const rotation = Math.sin(gameData.currentMultiplier * 0.2) * 3;
+                airplane.style.transform = `rotate(${rotation}deg)`;
+                
+                // التحقق من السحب التلقائي
+                if (gameData.isBetPlaced && gameData.autoCashOut > 0 && gameData.currentMultiplier >= gameData.autoCashOut) {
+                    cashOut();
+                    gameData.autoCashOut = 0;
+                    [autoBet1, autoBet2, autoBet3].forEach(el => el.classList.remove('active'));
+                }
+                
+                // التحقق من الانفجار
+                if (gameData.currentMultiplier >= gameData.explosionPoint) {
+                    endRound();
+                    return;
+                }
+                
+                // تحديث واجهة المستخدم
+                updateUI();
+            }, 40); // تحديث كل 40 مللي ثانية
         }
         
-        // إنهاء الجولة
+        // ========== إنهاء الجولة ==========
         function endRound() {
             gameData.isRoundActive = false;
             
-            // إخفاء اللهب
-            flame.style.display = 'none';
+            // إخفاء لهب المحرك
+            engineFlame.style.display = 'none';
+            
+            // إضافة المضاعف إلى التاريخ
+            gameData.history.unshift(gameData.currentMultiplier);
+            if (gameData.history.length > 10) gameData.history.pop();
+            createHistoryItems();
             
             // عرض تأثير الانفجار
-            explosion.style.left = '50%';
-            explosion.style.top = '50%';
-            explosion.style.opacity = '1';
-            explosion.style.transform = 'translate(-50%, -50%) scale(0)';
+            createExplosionEffect();
             
-            // تأثير الانفجار المتدرج
-            let scale = 0;
-            const explodeInterval = setInterval(() => {
-                scale += 0.1;
-                explosion.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                
-                if (scale >= 2) {
-                    clearInterval(explodeInterval);
-                    
-                    setTimeout(() => {
-                        explosion.style.opacity = '0';
-                        
-                        // إضافة المضاعف إلى التاريخ
-                        gameData.history.unshift(gameData.currentMultiplier);
-                        if (gameData.history.length > 10) gameData.history.pop();
-                        createHistoryItems();
-                        
-                        // إعادة تعيين اللاعبين الذين لم يسحبوا
-                        gameData.players.forEach(player => {
-                            if (!player.cashedOut) {
-                                player.multiplier = 0;
-                                player.bet = 0;
-                            }
-                        });
-                        
-                        // إعادة تعيين حالة الرهان
-                        if (gameData.isBetPlaced) {
-                            gameData.isBetPlaced = false;
-                            showNotification(`انفجر الصاروخ! خسرت رهانك @ ${gameData.currentMultiplier.toFixed(2)}x`);
-                        }
-                        
-                        // بدء مؤقت الجولة الجديدة
-                        startRoundTimer();
-                    }, 500);
+            // إعادة تعيين اللاعبين الذين لم يسحبوا
+            gameData.players.forEach(player => {
+                if (!player.cashedOut && player.multiplier === 0) {
+                    player.multiplier = 0;
+                    player.bet = 0;
                 }
-            }, 30);
+            });
+            
+            // إعادة تعيين حالة الرهان
+            if (gameData.isBetPlaced) {
+                gameData.isBetPlaced = false;
+                showNotification(`انفجرت الطائرة! خسرت رهانك @ ${gameData.currentMultiplier.toFixed(2)}x`);
+            }
             
             // تحديث واجهة المستخدم
             updateUI();
+            multiplierLabelEl.textContent = `انفجرت الطائرة @ ${gameData.currentMultiplier.toFixed(2)}x`;
+            
+            // تأخير ثم بدء مؤقت الجولة الجديدة
+            setTimeout(() => {
+                startRoundTimer();
+            }, 3000);
         }
         
-        // إنشاء تأثير العملات
-        function createCoinEffect(amount) {
-            const multiplierDisplay = document.querySelector('.multiplier-display');
-            const coinCount = Math.min(10, Math.floor(amount / 100));
+        // ========== إنشاء تأثير انفجار واقعي ==========
+        function createExplosionEffect() {
+            const explosionCount = 3; // عدة انفجارات صغيرة
             
-            for (let i = 0; i < coinCount; i++) {
-                const coin = document.createElement('div');
-                coin.className = 'coin-effect';
-                coin.textContent = `+${Math.floor(amount / coinCount)}`;
-                
-                // وضع عشوائي
-                const left = Math.random() * 80 + 10;
-                const top = Math.random() * 50 + 10;
-                
-                coin.style.left = `${left}%`;
-                coin.style.top = `${top}%`;
-                
-                multiplierDisplay.appendChild(coin);
-                
-                // تحريك العملة للأعلى وإزالتها
-                let currentTop = top;
-                const coinInterval = setInterval(() => {
-                    currentTop -= 1;
-                    coin.style.top = `${currentTop}%`;
-                    coin.style.opacity = `${currentTop / 100}`;
+            for (let i = 0; i < explosionCount; i++) {
+                setTimeout(() => {
+                    // انفجار رئيسي
+                    const explosion = document.createElement('div');
+                    explosion.className = 'explosion';
                     
-                    if (currentTop < -10) {
-                        clearInterval(coinInterval);
-                        if (coin.parentNode) {
-                            coin.parentNode.removeChild(coin);
+                    // حجم عشوائي
+                    const size = Math.random() * 100 + 80;
+                    explosion.style.width = `${size}px`;
+                    explosion.style.height = `${size}px`;
+                    
+                    // موضع قريب من الطائرة
+                    const rect = airplaneContainer.getBoundingClientRect();
+                    const trackRect = document.querySelector('.flight-track').getBoundingClientRect();
+                    
+                    const left = rect.left - trackRect.left + (rect.width / 2) - (size / 2);
+                    const top = rect.top - trackRect.top + (rect.height / 2) - (size / 2);
+                    
+                    explosion.style.left = `${left}px`;
+                    explosion.style.top = `${top}px`;
+                    explosion.style.opacity = '1';
+                    
+                    document.querySelector('.flight-track').appendChild(explosion);
+                    
+                    // جزيئات الانفجار
+                    createExplosionParticles(left + size/2, top + size/2, size);
+                    
+                    // تحريك وتلاشي الانفجار
+                    let scale = 0;
+                    let opacity = 1;
+                    
+                    const explodeInterval = setInterval(() => {
+                        scale += 0.1;
+                        opacity -= 0.05;
+                        
+                        explosion.style.transform = `scale(${scale})`;
+                        explosion.style.opacity = opacity;
+                        
+                        if (opacity <= 0) {
+                            clearInterval(explodeInterval);
+                            if (explosion.parentNode) {
+                                explosion.parentNode.removeChild(explosion);
+                            }
+                        }
+                    }, 30);
+                }, i * 200); // تأخير بين الانفجارات
+            }
+        }
+        
+        // ========== إنشاء جزيئات الانفجار ==========
+        function createExplosionParticles(x, y, size) {
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'explosion-particle';
+                
+                // حجم عشوائي
+                const particleSize = Math.random() * 8 + 4;
+                particle.style.width = `${particleSize}px`;
+                particle.style.height = `${particleSize}px`;
+                
+                // لون عشوائي (أحمر/برتقالي/أصفر)
+                const hue = Math.random() * 30 + 10; // 10-40 (أحمر/برتقالي)
+                particle.style.background = `radial-gradient(circle, hsl(${hue}, 100%, 60%), hsl(${hue}, 100%, 40%))`;
+                
+                // موضع البداية
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.opacity = '1';
+                
+                document.querySelector('.flight-track').appendChild(particle);
+                
+                // حركة الجزيئات في اتجاهات عشوائية
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 1;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                
+                let posX = x;
+                let posY = y;
+                let opacity = 1;
+                
+                const particleInterval = setInterval(() => {
+                    posX += vx;
+                    posY += vy;
+                    opacity -= 0.03;
+                    
+                    particle.style.left = `${posX}px`;
+                    particle.style.top = `${posY}px`;
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity <= 0) {
+                        clearInterval(particleInterval);
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
                         }
                     }
                 }, 30);
             }
         }
         
-        // عرض الإشعار
+        // ========== إنشاء تأثير العملات ==========
+        function createCoinEffect(amount) {
+            const flightTrack = document.querySelector('.flight-track');
+            const coinCount = Math.min(10, Math.floor(amount / 100));
+            
+            for (let i = 0; i < coinCount; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'coin-effect';
+                    coin.textContent = `+${Math.floor(amount / coinCount)}`;
+                    
+                    // وضع عشوائي قرب الطائرة
+                    const rect = airplaneContainer.getBoundingClientRect();
+                    const trackRect = flightTrack.getBoundingClientRect();
+                    
+                    const left = rect.left - trackRect.left + Math.random() * 50;
+                    const top = rect.top - trackRect.top - 30;
+                    
+                    coin.style.left = `${left}px`;
+                    coin.style.top = `${top}px`;
+                    
+                    flightTrack.appendChild(coin);
+                    
+                    // تحريك العملة للأعلى وإزالتها
+                    let currentTop = top;
+                    const coinInterval = setInterval(() => {
+                        currentTop -= 2;
+                        coin.style.top = `${currentTop}px`;
+                        coin.style.opacity = `${Math.max(0, currentTop / 100)}`;
+                        
+                        if (currentTop < -30) {
+                            clearInterval(coinInterval);
+                            if (coin.parentNode) {
+                                coin.parentNode.removeChild(coin);
+                            }
+                        }
+                    }, 30);
+                }, i * 100);
+            }
+        }
+        
+        // ========== عرض الإشعار ==========
         function showNotification(text) {
             notificationEl.textContent = text;
             notificationEl.classList.add('show');
@@ -1273,7 +1604,7 @@
             }, 3000);
         }
         
-        // بدء اللعبة عند تحميل الصفحة
+        // ========== بدء اللعبة عند تحميل الصفحة ==========
         window.addEventListener('load', initGame);
     </script>
 </body>
