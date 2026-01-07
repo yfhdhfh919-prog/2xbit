@@ -3,662 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plane Crash - لعبة الطائرة الأصلية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>JACKPOT Game</title>
     <style>
-        /* ========== RESET & BASE ========== */
+        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 100%);
+            background: #000;
             color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
-            direction: rtl;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
-        /* ========== GAME CONTAINER ========== */
         .game-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 15px;
-            gap: 15px;
-            max-width: 1600px;
-            margin: 0 auto;
+            background: #0a0a0a;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            border: 2px solid #333;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
         }
 
-        /* ========== HEADER ========== */
+        /* Header */
         .header {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 20px;
-            background: rgba(10, 10, 30, 0.8);
-            border-radius: 15px;
-            padding: 20px;
-            align-items: center;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #00ff88;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-        }
-
-        .logo-icon {
-            font-size: 32px;
-            animation: planeFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes planeFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .multiplier-box {
             text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(20, 20, 40, 0.8));
-            border-radius: 12px;
-            border: 2px solid #00ff88;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #333;
         }
 
-        .multiplier-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+        .jackpot-title {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffd700, #ff9500, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .jackpot-amount {
+            font-size: 72px;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
-        .multiplier-label {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .multiplier-value {
-            font-size: 48px;
-            font-weight: bold;
-            color: #00ff88;
-            text-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
-            font-family: 'Courier New', monospace;
-        }
-
-        .stats {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 16px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-row:last-child {
-            border-bottom: none;
-        }
-
-        .stat-value {
-            color: #00ff88;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* ========== MAIN CONTENT ========== */
-        .main-content {
+        /* Main Game Area */
+        .game-area {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 3fr 2fr;
             gap: 20px;
-            flex: 1;
+            margin-bottom: 30px;
         }
 
-        @media (max-width: 1200px) {
-            .main-content {
+        @media (max-width: 768px) {
+            .game-area {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* ========== LEFT PANEL ========== */
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* Multipliers Grid */
+        .multipliers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
-        /* ========== GAME AREA ========== */
-        .game-area {
-            background: rgba(10, 10, 30, 0.8);
-            border-radius: 15px;
-            padding: 0;
+        .multiplier-item {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 25px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            min-height: 500px;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .sky-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, #0a0a1a 0%, #1a2a4a 100%);
-            z-index: 1;
+        .multiplier-item:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
         }
 
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            z-index: 2;
+        .multiplier-item.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
-        .runway-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 120px;
-            background: linear-gradient(to bottom, rgba(20, 20, 30, 0.8), rgba(10, 10, 20, 0.9));
-            z-index: 3;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .multiplier-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffd700;
         }
 
-        .runway {
-            position: absolute;
-            top: 60px;
-            left: 50px;
-            right: 50px;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                #00ff88 20%, 
-                #00ff88 80%, 
-                transparent 100%);
-            box-shadow: 0 0 10px #00ff88;
-            z-index: 4;
+        .multiplier-item.winner {
+            animation: winnerFlash 1s infinite;
         }
 
-        .runway-markings {
-            position: absolute;
-            top: 58px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            z-index: 4;
-        }
-
-        .runway-mark {
-            position: absolute;
-            width: 20px;
-            height: 4px;
-            background: #00ff88;
-            top: 2px;
-        }
-
-        .plane {
-            position: absolute;
-            bottom: 30px;
-            right: 50%;
-            transform: translateX(50%) rotate(0deg);
-            font-size: 70px;
-            transition: all 0.1s linear;
-            z-index: 10;
-            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
-        }
-
-        .plane-trail {
-            position: absolute;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #00ff88, transparent);
-            opacity: 0.7;
-            bottom: 65px;
-            z-index: 9;
-        }
-
-        .explosion {
-            position: absolute;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, #ff3300 0%, #ff9900 30%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 11;
-            transition: all 0.5s ease-out;
-        }
-
-        .explosion-particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff9900;
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 11;
-        }
-
-        /* ========== BET PANEL ========== */
-        .bet-panel {
-            background: rgba(10, 10, 30, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .bet-panel-title {
-            color: #00ff88;
-            font-size: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
-        }
-
-        .bet-amounts {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .bet-amounts {
-                grid-template-columns: repeat(3, 1fr);
+        @keyframes winnerFlash {
+            0%, 100% { 
+                background: rgba(255, 215, 0, 0.1);
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+            50% { 
+                background: rgba(255, 215, 0, 0.3);
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
             }
         }
 
-        .bet-btn {
-            padding: 16px 8px;
-            background: rgba(30, 30, 50, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #ccc;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .bet-btn:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: #00ff88;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 255, 136, 0.2);
-        }
-
-        .bet-btn.active {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 200, 100, 0.3));
-            border-color: #00ff88;
-            color: #00ff88;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-        }
-
-        .custom-bet {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .custom-bet input {
-            flex: 1;
-            padding: 18px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            color: white;
-            font-size: 20px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-        }
-
-        .custom-bet input:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 22px 10px;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            min-height: 65px;
-        }
-
-        .bet-btn-main {
-            background: linear-gradient(135deg, #00cc66, #009933);
-            color: white;
-        }
-
-        .bet-btn-main:hover:not(:disabled) {
-            background: linear-gradient(135deg, #00dd77, #00aa44);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .bet-btn-main:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .cashout-btn {
-            background: linear-gradient(135deg, #ff9900, #ff6600);
-            color: white;
-        }
-
-        .cashout-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #ffaa33, #ff7733);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 153, 0, 0.3);
-        }
-
-        .cashout-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .auto-cashout {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-        }
-
-        .auto-cashout span {
-            color: #aaa;
-            font-size: 16px;
-            white-space: nowrap;
-        }
-
-        .auto-cashout-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            height: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            outline: none;
-        }
-
-        .auto-cashout-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #00ff88;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
-        }
-
-        .auto-value {
-            background: rgba(0, 255, 136, 0.2);
-            border: 1px solid #00ff88;
-            border-radius: 20px;
-            padding: 10px 25px;
-            color: #00ff88;
-            font-weight: bold;
-            font-size: 18px;
-            min-width: 80px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* ========== RIGHT PANEL ========== */
+        /* Right Panel */
         .right-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .stats-box, .live-bets, .history {
-            background: rgba(10, 10, 30, 0.8);
+            background: #111;
             border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border: 2px solid #333;
         }
 
-        .stats-box h3, .live-bets h3, .history h3 {
-            color: #00ff88;
-            margin-bottom: 20px;
-            font-size: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .payout-section {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            font-size: 16px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        /* ========== LIVE BETS ========== */
-        .live-bets {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .live-bets-content {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 5px;
-        }
-
-        .live-bets-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .live-bets-content::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-        }
-
-        .live-bets-content::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 136, 0.5);
-            border-radius: 3px;
-        }
-
-        .bet-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
+        .payout-title {
+            font-size: 24px;
+            color: #ccc;
             margin-bottom: 10px;
-            border-left: 4px solid #00ff88;
-            transition: all 0.3s;
         }
 
-        .bet-row.user-bet {
-            border-left-color: #ff9900;
-            background: rgba(255, 153, 0, 0.1);
-            box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
-        }
-
-        .bet-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #0099ff, #00ff88);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .payout-value {
+            font-size: 72px;
             font-weight: bold;
-            font-size: 16px;
-        }
-
-        .user-avatar.you {
-            background: linear-gradient(135deg, #ff9900, #ff6600);
+            color: #ffd700;
+            margin-bottom: 20px;
         }
 
         .bet-info {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .bet-username {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .bet-time {
-            font-size: 12px;
-            color: #aaa;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #222;
+            border-radius: 10px;
         }
 
         .bet-amount {
-            color: #00ff88;
-            font-weight: bold;
             font-size: 18px;
-            font-family: 'Courier New', monospace;
-            min-width: 100px;
-            text-align: left;
+            color: #ccc;
         }
 
-        .bet-profit {
-            color: #ff9900;
+        .bet-amount span {
+            color: #ffd700;
             font-weight: bold;
-            font-size: 18px;
+        }
+
+        .timer-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .timer-display {
+            font-size: 24px;
+            color: #ffd700;
+            margin-bottom: 10px;
             font-family: 'Courier New', monospace;
-            min-width: 100px;
-            text-align: left;
         }
 
-        .bet-profit.positive {
-            color: #00ff88;
+        .timer-bar {
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
         }
 
-        /* ========== HISTORY ========== */
-        .history-items {
+        .timer-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff9500);
+            width: 0%;
+            transition: width 1s linear;
+        }
+
+        .timer-labels {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: #111;
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #333;
+        }
+
+        .bet-buttons {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 768px) {
-            .history-items {
+            .bet-buttons {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        .history-item {
-            padding: 12px 8px;
-            background: rgba(255, 0, 0, 0.15);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            border-radius: 8px;
-            font-weight: bold;
-            color: #ff6666;
-            font-size: 16px;
+        .bet-button {
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 15px 10px;
             text-align: center;
+            cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Courier New', monospace;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
         }
 
-        .history-item:hover {
-            background: rgba(255, 0, 0, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(255, 0, 0, 0.2);
+        .bet-button:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
         }
 
-        .history-item.high {
-            background: rgba(255, 153, 0, 0.15);
-            border-color: rgba(255, 153, 0, 0.3);
-            color: #ff9900;
+        .bet-button.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
         }
 
-        .history-item.very-high {
-            background: rgba(0, 255, 136, 0.15);
-            border-color: rgba(0, 255, 136, 0.3);
-            color: #00ff88;
+        .take-button {
+            background: linear-gradient(45deg, #ff9500, #ffd700);
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #000;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
         }
 
-        /* ========== MODALS ========== */
+        .take-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .take-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Numbers Grid */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .number-item {
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .number-item.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+        }
+
+        /* Game Message */
         .game-message {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.95);
-            padding: 40px 60px;
+            padding: 40px;
             border-radius: 20px;
-            border: 3px solid #00ff88;
-            z-index: 1000;
+            border: 3px solid #ffd700;
             text-align: center;
             display: none;
+            z-index: 1000;
             min-width: 400px;
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
             animation: messageAppear 0.5s ease-out;
         }
 
@@ -670,46 +335,42 @@
 
         .message-title {
             font-size: 42px;
-            color: #00ff88;
-            margin-bottom: 25px;
-            text-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .message-amount {
+            font-size: 64px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
         }
 
         .message-multiplier {
-            font-size: 60px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 25px;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-        }
-
-        .message-profit {
             font-size: 32px;
-            color: #00ff88;
+            color: #ffd700;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
         }
 
-        .message-profit.negative {
-            color: #ff4444;
-        }
-
+        /* Next Round Timer */
         .next-round-timer {
-            position: absolute;
-            top: 30px;
-            left: 30px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: rgba(0, 0, 0, 0.8);
             padding: 15px 25px;
             border-radius: 15px;
-            border: 2px solid #ff9900;
+            border: 2px solid #ff9500;
             text-align: center;
+            display: none;
             z-index: 100;
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.5);
         }
 
         .timer-label {
-            color: #aaa;
+            color: #ccc;
             font-size: 14px;
             margin-bottom: 5px;
         }
@@ -717,109 +378,8 @@
         .timer-value {
             font-size: 32px;
             font-weight: bold;
-            color: #ff9900;
+            color: #ff9500;
             font-family: 'Courier New', monospace;
-        }
-
-        /* ========== ANIMATIONS ========== */
-        @keyframes cashoutFlash {
-            0%, 100% { 
-                background-color: transparent; 
-                box-shadow: 0 0 0 rgba(0, 255, 136, 0);
-            }
-            50% { 
-                background-color: rgba(0, 255, 136, 0.3); 
-                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            }
-        }
-
-        .cashout-flash {
-            animation: cashoutFlash 0.5s ease-in-out 3;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 1024px) {
-            .header {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .multiplier-value {
-                font-size: 40px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .game-container {
-                padding: 10px;
-                gap: 10px;
-            }
-            
-            .bet-amounts {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .game-message {
-                min-width: 300px;
-                padding: 30px 40px;
-            }
-            
-            .message-title {
-                font-size: 32px;
-            }
-            
-            .message-multiplier {
-                font-size: 48px;
-            }
-            
-            .message-profit {
-                font-size: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 20px;
-            }
-            
-            .logo-icon {
-                font-size: 28px;
-            }
-            
-            .multiplier-value {
-                font-size: 36px;
-            }
-            
-            .bet-btn {
-                padding: 14px 5px;
-                font-size: 14px;
-            }
-            
-            .custom-bet input {
-                padding: 14px;
-                font-size: 18px;
-            }
-            
-            .action-btn {
-                padding: 18px 8px;
-                font-size: 16px;
-                min-height: 55px;
-            }
         }
     </style>
 </head>
@@ -827,871 +387,362 @@
     <div class="game-container">
         <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <div class="logo-icon">✈️</div>
-                <div>PLANE CRASH</div>
+            <div class="jackpot-title">JACKPOT</div>
+            <div class="jackpot-amount" id="jackpotAmount">910,244</div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="game-area">
+            <!-- Left: Multipliers Grid -->
+            <div class="multipliers-grid" id="multipliersGrid">
+                <!-- Multipliers will be populated by JavaScript -->
             </div>
-            
-            <div class="multiplier-box">
-                <div class="multiplier-label">المضاعف الحالي</div>
-                <div class="multiplier-value" id="liveMultiplier">1.00x</div>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-row">
-                    <span>إجمالي الرهانات:</span>
-                    <span class="stat-value" id="totalBets">1,234,567.89 ▲</span>
+
+            <!-- Right: Payout Panel -->
+            <div class="right-panel">
+                <div class="payout-section">
+                    <div class="payout-title">Payout</div>
+                    <div class="payout-value" id="payoutValue">2.25X</div>
+                    <div class="bet-info">
+                        <div class="bet-amount">
+                            الرهان: <span id="currentBet">0</span>
+                        </div>
+                        <div class="bet-amount">
+                            الربح: <span id="currentProfit">0</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-row">
-                    <span>اللاعبون النشطون:</span>
-                    <span class="stat-value" id="activePlayers">32,156</span>
-                </div>
-                <div class="stat-row">
-                    <span>رصيدك:</span>
-                    <span class="stat-value" id="userBalance">10,000</span>
+
+                <div class="timer-section">
+                    <div class="timer-display" id="timerDisplay">15s</div>
+                    <div class="timer-bar">
+                        <div class="timer-progress" id="timerProgress"></div>
+                    </div>
+                    <div class="timer-labels">
+                        <span>0s</span>
+                        <span>15s</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Left Panel -->
-            <div class="left-panel">
-                <!-- Game Area -->
-                <div class="game-area" id="gameArea">
-                    <div class="sky-background" id="skyBackground"></div>
-                    <div class="runway-container">
-                        <div class="runway"></div>
-                        <div class="runway-markings" id="runwayMarkings"></div>
-                    </div>
-                    <div class="plane" id="plane">✈️</div>
-                    <div class="explosion" id="explosion"></div>
-                </div>
+        <!-- Numbers Grid -->
+        <div class="numbers-grid" id="numbersGrid">
+            <!-- Numbers will be populated by JavaScript -->
+        </div>
 
-                <!-- Bet Panel -->
-                <div class="bet-panel">
-                    <div class="bet-panel-title">لوحة الرهان</div>
-                    
-                    <div class="bet-amounts">
-                        <div class="bet-btn" onclick="setQuickBet(100)">100</div>
-                        <div class="bet-btn" onclick="setQuickBet(500)">500</div>
-                        <div class="bet-btn active" onclick="setQuickBet(1000)">1,000</div>
-                        <div class="bet-btn" onclick="setQuickBet(5000)">5,000</div>
-                        <div class="bet-btn" onclick="setQuickBet(10000)">10,000</div>
-                    </div>
-
-                    <div class="custom-bet">
-                        <input type="number" id="betAmount" value="1000" min="100" max="1000000" step="100">
-                        <button class="action-btn bet-btn-main" onclick="placeBet()" id="placeBetBtn">
-                            <i class="fas fa-coins"></i>
-                            وضع الرهان
-                        </button>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button class="action-btn cashout-btn" id="cashoutBtn" onclick="cashout()" disabled>
-                            <i class="fas fa-money-bill-wave"></i>
-                            السحب الآن
-                        </button>
-                        <button class="action-btn bet-btn-main" onclick="toggleAutoBet()" id="autoBetBtn">
-                            <i class="fas fa-robot"></i>
-                            التلقائي: OFF
-                        </button>
-                    </div>
-
-                    <div class="auto-cashout">
-                        <span>السحب التلقائي عند:</span>
-                        <input type="range" id="autoCashoutSlider" class="auto-cashout-slider" min="1.1" max="20" step="0.1" value="2.0">
-                        <div class="auto-value" id="autoCashoutValue">2.0x</div>
-                    </div>
-                </div>
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="bet-buttons" id="betButtons">
+                <!-- Bet buttons will be populated by JavaScript -->
             </div>
-
-            <!-- Right Panel -->
-            <div class="right-panel">
-                <!-- Stats -->
-                <div class="stats-box">
-                    <h3>إحصائيات الجولة</h3>
-                    <div class="stat-item">
-                        <span>الرهان النشط:</span>
-                        <span id="currentBetAmount">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>الربح المحتمل:</span>
-                        <span id="potentialProfit">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>أعلى مضاعف:</span>
-                        <span id="highestMultiplier">0.00x</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>وقت الجولة:</span>
-                        <span id="roundTime">0 ثانية</span>
-                    </div>
-                </div>
-
-                <!-- Live Bets -->
-                <div class="live-bets">
-                    <h3>
-                        <span>الرهانات الحية</span>
-                        <span id="liveBetsCount">0</span>
-                    </h3>
-                    <div class="live-bets-content" id="liveBetsContainer">
-                        <!-- Live bets will appear here -->
-                    </div>
-                </div>
-
-                <!-- History -->
-                <div class="history">
-                    <h3>آخر الانفجارات</h3>
-                    <div class="history-items" id="crashHistory">
-                        <!-- History will be populated -->
-                    </div>
-                </div>
-            </div>
+            <button class="take-button" id="takeButton" onclick="takeProfit()" disabled>TAKE</button>
         </div>
     </div>
 
     <!-- Game Message -->
     <div class="game-message" id="gameMessage">
-        <div class="message-title" id="messageTitle">تم السحب!</div>
-        <div class="message-multiplier" id="messageMultiplier">2.45x</div>
-        <div class="message-profit" id="messageProfit">+ 2,450</div>
+        <div class="message-title" id="messageTitle">فوز كبير!</div>
+        <div class="message-amount" id="messageAmount">+ 0</div>
+        <div class="message-multiplier" id="messageMultiplier">1.00X</div>
     </div>
 
     <!-- Next Round Timer -->
-    <div class="next-round-timer" style="display: none;" id="nextRoundTimer">
+    <div class="next-round-timer" id="nextRoundTimer">
         <div class="timer-label">الجولة التالية تبدأ خلال</div>
-        <div class="timer-value" id="timerValue">3</div>
+        <div class="timer-value" id="nextRoundTimerValue">3</div>
     </div>
 
     <script>
-        // ========== بيانات اللعبة الأساسية ==========
-        let gameState = 'idle'; // idle, countdown, running, crashed, cashing_out
-        let currentMultiplier = 1.00;
-        let targetCrashPoint = 0;
+        // ========== بيانات اللعبة ==========
+        let gameState = 'waiting'; // waiting, running, ended
+        let jackpotAmount = 910244;
         let userBalance = 10000;
         let currentBet = 0;
-        let userBetActive = false;
-        let autoCashoutValue = 2.0;
-        let isAutoBet = false;
-        let gameInterval;
-        let planePosition = 0;
-        let roundStartTime = 0;
-        let roundDuration = 0;
-        let crashPointGenerated = false;
+        let selectedMultiplier = null;
+        let currentPayout = 2.25;
+        let timer = 15;
+        let timerInterval;
+        let roundTimeout;
         
-        // إعدادات اللعبة
-        const MIN_BET = 100;
-        const MAX_BET = 1000000;
-        const MIN_MULTIPLIER = 1.0;
-        const MAX_MULTIPLIER = 1000.0;
-        const ROUND_COUNTDOWN = 5; // ثواني قبل بدء الجولة
-        const ROUND_BREAK = 3; // ثواني بين الجولات
+        // المضاعفات
+        const multipliers = [2.61, 1.65, 2.52, 1.83, 2.98, 10.89, 3.80, 1.26, 1.01];
         
-        // الرهانات الحية
-        let liveBets = [];
+        // أزرار الرهان
+        const betAmounts = [13, 50, 200, 500, 1000];
         
-        // تاريخ الانفجارات
-        let crashHistory = [];
-        
-        // توليد السحاب
-        let clouds = [];
+        // الأرقام للعرض
+        const numbers = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
         
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             initGame();
-            createClouds();
-            createRunwayMarkings();
-            populateCrashHistory();
-            
-            // تحديث قيمة السحب التلقائي
-            document.getElementById('autoCashoutSlider').addEventListener('input', function() {
-                autoCashoutValue = parseFloat(this.value);
-                document.getElementById('autoCashoutValue').textContent = autoCashoutValue.toFixed(1) + 'x';
-            });
-            
-            // بدأ الجولة الأولى
-            setTimeout(startNewRound, 1000);
-            
-            // محاكاة الرهانات العشوائية
-            setInterval(simulateRandomBet, 2000);
-            
-            // تحديث الإحصائيات الحية
-            setInterval(updateLiveStats, 2000);
         });
         
         function initGame() {
-            // تهيئة تاريخ الانفجارات
-            for (let i = 0; i < 10; i++) {
-                crashHistory.push(generateCrashPoint());
-            }
+            // تعبئة المضاعفات
+            populateMultipliers();
             
-            // تحديث عرض الرصيد
-            updateBalanceDisplay();
+            // تعبئة أزرار الرهان
+            populateBetButtons();
+            
+            // تعبئة الأرقام
+            populateNumbers();
+            
+            // تحديث العرض
+            updateDisplay();
+            
+            // بدأ الجولة الأولى
+            setTimeout(startNewRound, 1000);
+        }
+        
+        function populateMultipliers() {
+            const grid = document.getElementById('multipliersGrid');
+            grid.innerHTML = '';
+            
+            multipliers.forEach((multiplier, index) => {
+                const multiplierItem = document.createElement('div');
+                multiplierItem.className = 'multiplier-item';
+                multiplierItem.innerHTML = `
+                    <div class="multiplier-value">${multiplier}X</div>
+                `;
+                
+                multiplierItem.addEventListener('click', () => selectMultiplier(multiplier, index));
+                
+                grid.appendChild(multiplierItem);
+            });
+        }
+        
+        function populateBetButtons() {
+            const container = document.getElementById('betButtons');
+            container.innerHTML = '';
+            
+            betAmounts.forEach((amount, index) => {
+                const button = document.createElement('div');
+                button.className = 'bet-button' + (index === 3 ? ' active' : '');
+                button.textContent = amount >= 1000 ? '1K' : amount;
+                
+                button.addEventListener('click', () => {
+                    // إزالة النشاط من جميع الأزرار
+                    document.querySelectorAll('.bet-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // إضافة النشاط للزر المحدد
+                    button.classList.add('active');
+                    
+                    // تحديد الرهان
+                    setBetAmount(amount);
+                });
+                
+                container.appendChild(button);
+            });
+            
+            // تعيين الرهان الافتراضي
+            setBetAmount(1000);
+        }
+        
+        function populateNumbers() {
+            const grid = document.getElementById('numbersGrid');
+            grid.innerHTML = '';
+            
+            numbers.forEach(number => {
+                const numberItem = document.createElement('div');
+                numberItem.className = 'number-item';
+                numberItem.textContent = number + 's';
+                grid.appendChild(numberItem);
+            });
+        }
+        
+        function setBetAmount(amount) {
+            currentBet = amount;
+            updateDisplay();
+        }
+        
+        function selectMultiplier(multiplier, index) {
+            if (gameState !== 'running') return;
+            
+            // إزالة التحديد السابق
+            document.querySelectorAll('.multiplier-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // تحديد المضاعف الجديد
+            selectedMultiplier = multiplier;
+            document.querySelectorAll('.multiplier-item')[index].classList.add('active');
+            
+            // تحديث قيمة الدفع
+            currentPayout = multiplier;
+            document.getElementById('payoutValue').textContent = multiplier.toFixed(2) + 'X';
+            
+            // تفعيل زر TAKE
+            document.getElementById('takeButton').disabled = false;
+            
+            // تحديث الربح المحتمل
+            updateDisplay();
         }
         
         function startNewRound() {
-            if (gameState === 'running' || gameState === 'countdown') return;
+            if (gameState === 'running') return;
             
-            gameState = 'countdown';
-            currentMultiplier = 1.00;
-            planePosition = 0;
-            roundStartTime = 0;
-            roundDuration = 0;
-            crashPointGenerated = false;
+            gameState = 'running';
+            selectedMultiplier = null;
+            currentPayout = 2.25;
+            timer = 15;
             
-            // إعادة تعيين الطائرة
-            const plane = document.getElementById('plane');
-            plane.style.right = '50%';
-            plane.style.transform = 'translateX(50%) rotate(0deg)';
+            // إعادة تعيين المضاعفات
+            document.querySelectorAll('.multiplier-item').forEach(item => {
+                item.classList.remove('active', 'winner');
+            });
             
-            // إخفاء الانفجار
-            const explosion = document.getElementById('explosion');
-            explosion.style.opacity = '0';
-            explosion.style.width = '0';
-            explosion.style.height = '0';
+            // تعطيل زر TAKE
+            document.getElementById('takeButton').disabled = true;
             
             // تحديث العرض
-            updateMultiplierDisplay();
+            updateDisplay();
             
-            // إظهار العد التنازلي للجولة
-            showRoundCountdown();
+            // إعادة تعيين المؤقت
+            document.getElementById('timerDisplay').textContent = timer + 's';
+            document.getElementById('timerProgress').style.width = '100%';
+            
+            // بدأ المؤقت
+            startTimer();
+            
+            // بدأ اختيار مضاعف عشوائي بعد فترة
+            startRandomSelection();
             
             console.log('بدأت جولة جديدة');
         }
         
-        function showRoundCountdown() {
-            let countdown = ROUND_COUNTDOWN;
-            const countdownElement = document.getElementById('nextRoundTimer');
-            const timerValue = document.getElementById('timerValue');
+        function startTimer() {
+            clearInterval(timerInterval);
             
-            countdownElement.style.display = 'block';
-            timerValue.textContent = countdown;
-            
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                timerValue.textContent = countdown;
+            timerInterval = setInterval(() => {
+                timer--;
+                document.getElementById('timerDisplay').textContent = timer + 's';
                 
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.style.display = 'none';
-                    startGame();
+                // تحديث شريط التقدم
+                const progress = (timer / 15) * 100;
+                document.getElementById('timerProgress').style.width = progress + '%';
+                
+                // تغيير اللون عندما يقترب الوقت من النهاية
+                if (timer <= 5) {
+                    document.getElementById('timerDisplay').style.color = '#ff4444';
+                    document.getElementById('timerProgress').style.background = 'linear-gradient(90deg, #ff4444, #ff9500)';
+                }
+                
+                // انتهاء الوقت
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    endRound();
                 }
             }, 1000);
         }
         
-        function startGame() {
-            gameState = 'running';
-            roundStartTime = Date.now();
+        function startRandomSelection() {
+            // مسح أي timeout سابق
+            clearTimeout(roundTimeout);
             
-            // توليد نقطة انفجار جديدة
-            targetCrashPoint = generateCrashPoint();
-            crashPointGenerated = true;
+            // اختيار مضاعف فائز بعد فترة عشوائية
+            const delay = Math.random() * 10000 + 5000; // بين 5 و15 ثانية
+            const winnerIndex = Math.floor(Math.random() * multipliers.length);
             
-            // بدأ اللعبة
-            gameInterval = setInterval(updateGame, 50); // 20fps
-            
-            console.log('بدأت اللعبة - نقطة الانفجار: ' + targetCrashPoint.toFixed(2) + 'x');
-        }
-        
-        function updateGame() {
-            if (gameState !== 'running') return;
-            
-            // حساب وقت الجولة
-            roundDuration = (Date.now() - roundStartTime) / 1000;
-            document.getElementById('roundTime').textContent = roundDuration.toFixed(1) + ' ثانية';
-            
-            // زيادة المضاعف
-            currentMultiplier += calculateMultiplierIncrement(currentMultiplier);
-            
-            // تحريك الطائرة
-            planePosition += 1;
-            const plane = document.getElementById('plane');
-            const gameArea = document.getElementById('gameArea');
-            const maxWidth = gameArea.clientWidth - 100;
-            const newRight = 50 + (planePosition * 0.5);
-            
-            if (newRight < maxWidth) {
-                plane.style.right = newRight + '%';
-                plane.style.transform = `translateX(50%) rotate(${planePosition * 0.1}deg)`;
+            roundTimeout = setTimeout(() => {
+                if (gameState !== 'running') return;
                 
-                // تحديث مسار الطائرة
-                updatePlaneTrail(plane.offsetLeft, plane.offsetTop);
-            }
-            
-            // تحريك السحاب
-            moveClouds();
-            
-            // تحديث العرض
-            updateMultiplierDisplay();
-            
-            // تحديث الرهانات الحية
-            updateLiveBets();
-            
-            // تحقق من السحب التلقائي
-            if (userBetActive && isAutoBet && currentMultiplier >= autoCashoutValue) {
-                cashout();
-                return;
-            }
-            
-            // تحقق من الانفجار
-            if (currentMultiplier >= targetCrashPoint) {
-                crashPlane();
-            }
+                // تحديد المضاعف الفائز
+                const winnerMultiplier = multipliers[winnerIndex];
+                selectMultiplier(winnerMultiplier, winnerIndex);
+                
+                // تأثير الفوز
+                document.querySelectorAll('.multiplier-item')[winnerIndex].classList.add('winner');
+                
+                // إذا لم يسحب المستخدم خلال 3 ثواني، يتم إنهاء الجولة
+                setTimeout(() => {
+                    if (gameState === 'running' && selectedMultiplier === winnerMultiplier) {
+                        takeProfit();
+                    }
+                }, 3000);
+                
+            }, delay);
         }
         
-        function updateMultiplierDisplay() {
-            const multiplierElement = document.getElementById('liveMultiplier');
-            const formattedMultiplier = currentMultiplier.toFixed(2);
-            multiplierElement.textContent = formattedMultiplier + 'x';
-            
-            // تحديث اللون حسب المضاعف
-            if (currentMultiplier >= 10) {
-                multiplierElement.style.color = '#ff9900';
-                multiplierElement.style.textShadow = '0 0 20px rgba(255, 153, 0, 0.8)';
-            } else if (currentMultiplier >= 5) {
-                multiplierElement.style.color = '#ff4444';
-                multiplierElement.style.textShadow = '0 0 20px rgba(255, 68, 68, 0.8)';
-            } else if (currentMultiplier >= 2) {
-                multiplierElement.style.color = '#00ff88';
-                multiplierElement.style.textShadow = '0 0 20px rgba(0, 255, 136, 0.8)';
-            } else {
-                multiplierElement.style.color = '#ffffff';
-                multiplierElement.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
-            }
-            
-            // تحديث الربح المحتمل
-            if (userBetActive) {
-                const profit = Math.floor(currentBet * (currentMultiplier - 1));
-                document.getElementById('potentialProfit').textContent = 
-                    profit.toLocaleString() + ' (+' + currentMultiplier.toFixed(2) + 'x)';
-            }
-        }
-        
-        function generateCrashPoint() {
-            // خوارزمية واقعية للانفجار (مشابهة للألعاب الأصلية)
-            const r = Math.random();
-            let crashPoint;
-            
-            if (r < 0.02) {
-                // 2% انفجار مبكر جداً (تحت 1.2x)
-                crashPoint = 1.0 + Math.random() * 0.2;
-            } else if (r < 0.15) {
-                // 13% انفجار منخفض (1.2x - 2x)
-                crashPoint = 1.2 + Math.random() * 0.8;
-            } else if (r < 0.40) {
-                // 25% انفجار منخفض-متوسط (2x - 3x)
-                crashPoint = 2.0 + Math.random() * 1.0;
-            } else if (r < 0.70) {
-                // 30% انفجار متوسط (3x - 5x)
-                crashPoint = 3.0 + Math.random() * 2.0;
-            } else if (r < 0.90) {
-                // 20% انفجار عالي (5x - 10x)
-                crashPoint = 5.0 + Math.random() * 5.0;
-            } else if (r < 0.98) {
-                // 8% انفجار عالي جداً (10x - 50x)
-                crashPoint = 10.0 + Math.random() * 40.0;
-            } else {
-                // 2% انفجار خرافي (50x - 1000x)
-                crashPoint = 50.0 + Math.random() * 950.0;
-            }
-            
-            // تقريب إلى منزلتين عشريتين
-            return Math.floor(crashPoint * 100) / 100;
-        }
-        
-        function calculateMultiplierIncrement(current) {
-            // زيادة أسرع في البداية، ثم تتباطأ (مشابه للأصل)
-            if (current < 1.2) return 0.02;
-            if (current < 2) return 0.015;
-            if (current < 3) return 0.01;
-            if (current < 5) return 0.008;
-            if (current < 10) return 0.005;
-            if (current < 20) return 0.003;
-            if (current < 50) return 0.002;
-            return 0.001;
-        }
-        
-        function setQuickBet(amount) {
-            document.getElementById('betAmount').value = amount;
-            
-            // تحديث الأزرار النشطة
-            document.querySelectorAll('.bet-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-        
-        function placeBet() {
-            if (gameState !== 'running') {
-                showToast('اللعبة لم تبدأ بعد، انتظر الجولة القادمة', 'warning');
-                return;
-            }
-            
-            if (userBetActive) {
-                showToast('لديك رهان نشط بالفعل!', 'warning');
-                return;
-            }
-            
-            const betAmount = parseInt(document.getElementById('betAmount').value);
-            
-            if (isNaN(betAmount) || betAmount < MIN_BET) {
-                showToast(`الحد الأدنى للرهان هو ${MIN_BET}`, 'error');
-                return;
-            }
-            
-            if (betAmount > MAX_BET) {
-                showToast(`الحد الأقصى للرهان هو ${MAX_BET.toLocaleString()}`, 'error');
-                return;
-            }
-            
-            if (betAmount > userBalance) {
-                showToast('رصيدك غير كافي!', 'error');
-                return;
-            }
-            
-            // خصم الرهان
-            userBalance -= betAmount;
-            currentBet = betAmount;
-            userBetActive = true;
-            
-            // تحديث الواجهة
-            document.getElementById('cashoutBtn').disabled = false;
-            updateBalanceDisplay();
-            document.getElementById('currentBetAmount').textContent = betAmount.toLocaleString();
-            document.getElementById('potentialProfit').textContent = '0 (+1.00x)';
-            
-            // إضافة رهان حي
-            addLiveBet('أنت', betAmount);
-            
-            // تأثير صوتي (محاكاة)
-            playSoundEffect('bet');
-            
-            showToast(`تم وضع رهان بقيمة ${betAmount.toLocaleString()}`, 'success');
-            console.log('تم وضع رهان: ' + betAmount);
-        }
-        
-        function cashout() {
-            if (!userBetActive || gameState !== 'running') return;
-            
-            gameState = 'cashing_out';
+        function takeProfit() {
+            if (!selectedMultiplier || gameState !== 'running') return;
             
             // حساب الربح
-            const profit = Math.floor(currentBet * currentMultiplier);
+            const profit = Math.floor(currentBet * selectedMultiplier);
             const netProfit = profit - currentBet;
             
             // تحديث الرصيد
-            userBalance += profit;
+            userBalance += netProfit;
             
-            // تحديث الواجهة
-            updateBalanceDisplay();
+            // تحديث الجاكبوت
+            jackpotAmount += Math.floor(currentBet * 0.1); // 10% للجاكبوت
             
-            // تأثير السحب
-            document.getElementById('cashoutBtn').classList.add('cashout-flash');
+            // عرض رسالة الفوز
+            showWinMessage(netProfit, selectedMultiplier);
             
-            // عرض رسالة النجاح
-            showCashoutMessage(currentMultiplier, netProfit);
+            // إنهاء الجولة
+            endRound();
             
-            // إزالة الرهان من القائمة الحية
-            removeUserBet();
-            
-            // إعادة تعيين بعد التأثير
-            setTimeout(() => {
-                userBetActive = false;
-                currentBet = 0;
-                document.getElementById('cashoutBtn').disabled = true;
-                document.getElementById('currentBetAmount').textContent = '0';
-                document.getElementById('potentialProfit').textContent = '0';
-                document.getElementById('cashoutBtn').classList.remove('cashout-flash');
-            }, 2000);
-            
-            // تأثير صوتي (محاكاة)
-            playSoundEffect('cashout');
-            
-            console.log('تم السحب عند: ' + currentMultiplier.toFixed(2) + 'x - الربح: ' + netProfit);
+            console.log('تم السحب: ' + netProfit + ' بمضاعف ' + selectedMultiplier);
         }
         
-        function crashPlane() {
-            if (gameState === 'crashed') return;
+        function endRound() {
+            if (gameState === 'ended') return;
             
-            gameState = 'crashed';
-            clearInterval(gameInterval);
+            gameState = 'ended';
+            clearInterval(timerInterval);
+            clearTimeout(roundTimeout);
             
-            // عرض الانفجار
-            const plane = document.getElementById('plane');
-            const explosion = document.getElementById('explosion');
-            
-            const planeRect = plane.getBoundingClientRect();
-            const gameAreaRect = document.getElementById('gameArea').getBoundingClientRect();
-            
-            explosion.style.left = (planeRect.left - gameAreaRect.left + planeRect.width / 2) + 'px';
-            explosion.style.top = (planeRect.top - gameAreaRect.top + planeRect.height / 2) + 'px';
-            explosion.style.opacity = '1';
-            explosion.style.width = '200px';
-            explosion.style.height = '200px';
-            
-            // تحريك الطائرة للأسفل
-            plane.style.transform = 'translateX(50%) rotate(90deg)';
-            plane.style.transition = 'transform 1s ease-out';
-            
-            // تأثير اهتزاز
-            document.getElementById('gameArea').classList.add('shake');
-            
-            // إضافة للتاريخ
-            crashHistory.unshift(targetCrashPoint);
-            if (crashHistory.length > 10) crashHistory.pop();
-            populateCrashHistory();
-            
-            // تحديث أعلى مضاعف
-            const highestElement = document.getElementById('highestMultiplier');
-            const currentHighest = parseFloat(highestElement.textContent) || 0;
-            if (targetCrashPoint > currentHighest) {
-                highestElement.textContent = targetCrashPoint.toFixed(2) + 'x';
-            }
-            
-            // خسارة الرهان إذا كان نشطاً
-            if (userBetActive) {
-                setTimeout(() => {
-                    showCrashMessage(targetCrashPoint, currentBet);
-                }, 1000);
-                
-                userBetActive = false;
-                currentBet = 0;
-                document.getElementById('cashoutBtn').disabled = true;
-                document.getElementById('currentBetAmount').textContent = '0';
-                document.getElementById('potentialProfit').textContent = '0';
-                
-                removeUserBet();
-            }
-            
-            // تأثير صوتي (محاكاة)
-            playSoundEffect('crash');
-            
-            // بدأ جولة جديدة بعد فترة راحة
-            setTimeout(() => {
-                document.getElementById('gameArea').classList.remove('shake');
-                startNextRound();
-            }, ROUND_BREAK * 1000);
-            
-            console.log('انفجار! عند: ' + targetCrashPoint.toFixed(2) + 'x');
-        }
-        
-        function startNextRound() {
-            // إخفاء الانفجار
-            document.getElementById('explosion').style.opacity = '0';
-            
-            // إظهار العد التنازلي
+            // إظهار المؤقت للجولة التالية
             document.getElementById('nextRoundTimer').style.display = 'block';
-            let countdown = ROUND_BREAK;
+            let countdown = 3;
             
-            const timerInterval = setInterval(() => {
-                document.getElementById('timerValue').textContent = countdown;
+            const nextRoundInterval = setInterval(() => {
+                document.getElementById('nextRoundTimerValue').textContent = countdown;
                 countdown--;
                 
                 if (countdown < 0) {
-                    clearInterval(timerInterval);
+                    clearInterval(nextRoundInterval);
+                    document.getElementById('nextRoundTimer').style.display = 'none';
                     startNewRound();
                 }
             }, 1000);
         }
         
-        function showCashoutMessage(multiplier, profit) {
+        function updateDisplay() {
+            // تحديث الجاكبوت
+            document.getElementById('jackpotAmount').textContent = jackpotAmount.toLocaleString();
+            
+            // تحديث الرهان الحالي
+            document.getElementById('currentBet').textContent = currentBet.toLocaleString();
+            
+            // تحديث قيمة الدفع
+            document.getElementById('payoutValue').textContent = currentPayout.toFixed(2) + 'X';
+            
+            // تحديث الربح المحتمل
+            const potentialProfit = currentBet * currentPayout;
+            document.getElementById('currentProfit').textContent = Math.floor(potentialProfit).toLocaleString();
+        }
+        
+        function showWinMessage(profit, multiplier) {
             const message = document.getElementById('gameMessage');
-            document.getElementById('messageTitle').textContent = 'تم السحب بنجاح! 🎉';
-            document.getElementById('messageTitle').style.color = '#00ff88';
-            document.getElementById('messageMultiplier').textContent = multiplier.toFixed(2) + 'x';
-            document.getElementById('messageProfit').textContent = '+ ' + profit.toLocaleString();
-            document.getElementById('messageProfit').className = 'message-profit';
+            document.getElementById('messageTitle').textContent = profit > 0 ? 'فوز كبير! 🎉' : 'لا ربح!';
+            document.getElementById('messageAmount').textContent = (profit > 0 ? '+' : '') + profit.toLocaleString();
+            document.getElementById('messageAmount').style.color = profit > 0 ? '#ffd700' : '#ff4444';
+            document.getElementById('messageMultiplier').textContent = multiplier.toFixed(2) + 'X';
             
             message.style.display = 'block';
-            message.style.borderColor = '#00ff88';
-            message.style.boxShadow = '0 0 50px rgba(0, 255, 136, 0.5)';
+            message.style.borderColor = profit > 0 ? '#ffd700' : '#ff4444';
+            message.style.boxShadow = profit > 0 ? 
+                '0 0 50px rgba(255, 215, 0, 0.5)' : 
+                '0 0 50px rgba(255, 68, 68, 0.5)';
             
             setTimeout(() => {
                 message.style.display = 'none';
             }, 3000);
-        }
-        
-        function showCrashMessage(multiplier, lostAmount) {
-            const message = document.getElementById('gameMessage');
-            document.getElementById('messageTitle').textContent = 'انفجار الطائرة! 💥';
-            document.getElementById('messageTitle').style.color = '#ff4444';
-            document.getElementById('messageMultiplier').textContent = multiplier.toFixed(2) + 'x';
-            document.getElementById('messageProfit').textContent = '- ' + lostAmount.toLocaleString();
-            document.getElementById('messageProfit').className = 'message-profit negative';
-            
-            message.style.display = 'block';
-            message.style.borderColor = '#ff4444';
-            message.style.boxShadow = '0 0 50px rgba(255, 68, 68, 0.5)';
-            
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 3000);
-        }
-        
-        function toggleAutoBet() {
-            isAutoBet = !isAutoBet;
-            const btn = document.getElementById('autoBetBtn');
-            
-            if (isAutoBet) {
-                btn.innerHTML = '<i class="fas fa-robot"></i> التلقائي: ON';
-                btn.style.background = 'linear-gradient(135deg, #00cc66, #007700)';
-                showToast('تم تفعيل وضع الرهان التلقائي', 'success');
-            } else {
-                btn.innerHTML = '<i class="fas fa-robot"></i> التلقائي: OFF';
-                btn.style.background = 'linear-gradient(135deg, #00cc66, #009933)';
-                showToast('تم إيقاف وضع الرهان التلقائي', 'info');
-            }
-        }
-        
-        function addLiveBet(username, betAmount) {
-            const bet = {
-                id: Date.now(),
-                username: username,
-                bet: betAmount,
-                profit: 0,
-                avatar: username === 'أنت' ? 'أنت' : Math.floor(Math.random() * 90 + 10).toString(),
-                time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
-                isUser: username === 'أنت'
-            };
-            
-            liveBets.unshift(bet);
-            if (liveBets.length > 20) {
-                liveBets.pop();
-            }
-            
-            populateLiveBets();
-        }
-        
-        function removeUserBet() {
-            liveBets = liveBets.filter(bet => !bet.isUser);
-            populateLiveBets();
-        }
-        
-        function updateLiveBets() {
-            liveBets.forEach(bet => {
-                if (bet.isUser && userBetActive) {
-                    bet.profit = Math.floor(currentBet * (currentMultiplier - 1));
-                } else if (!bet.isUser) {
-                    bet.profit += Math.floor(bet.bet * 0.01);
-                }
-            });
-            
-            populateLiveBets();
-        }
-        
-        function populateLiveBets() {
-            const container = document.getElementById('liveBetsContainer');
-            const countElement = document.getElementById('liveBetsCount');
-            
-            container.innerHTML = '';
-            countElement.textContent = `(${liveBets.length})`;
-            
-            if (liveBets.length === 0) {
-                const emptyMessage = document.createElement('div');
-                emptyMessage.className = 'bet-row';
-                emptyMessage.innerHTML = `
-                    <div style="text-align: center; width: 100%; color: #aaa; padding: 20px;">
-                        لا توجد رهانات حية حالياً
-                    </div>
-                `;
-                container.appendChild(emptyMessage);
-                return;
-            }
-            
-            liveBets.forEach(bet => {
-                const betRow = document.createElement('div');
-                betRow.className = 'bet-row' + (bet.isUser ? ' user-bet' : '');
-                betRow.id = `bet-${bet.id}`;
-                
-                betRow.innerHTML = `
-                    <div class="bet-user">
-                        <div class="user-avatar ${bet.isUser ? 'you' : ''}">${bet.avatar}</div>
-                        <div class="bet-info">
-                            <div class="bet-username">${bet.username}</div>
-                            <div class="bet-time">${bet.time}</div>
-                        </div>
-                    </div>
-                    <div class="bet-amount">${bet.bet.toLocaleString()}</div>
-                    <div class="bet-profit ${bet.profit > 0 ? 'positive' : ''}">
-                        ${bet.profit > 0 ? '+' : ''}${bet.profit.toLocaleString()}
-                    </div>
-                `;
-                
-                container.appendChild(betRow);
-            });
-        }
-        
-        function populateCrashHistory() {
-            const container = document.getElementById('crashHistory');
-            container.innerHTML = '';
-            
-            crashHistory.forEach((multiplier, index) => {
-                const item = document.createElement('div');
-                item.className = 'history-item';
-                
-                // تصنيف حسب قيمة المضاعف
-                if (multiplier >= 10) {
-                    item.className += ' very-high';
-                } else if (multiplier >= 5) {
-                    item.className += ' high';
-                }
-                
-                item.textContent = multiplier.toFixed(2) + 'x';
-                container.appendChild(item);
-            });
-        }
-        
-        function updateBalanceDisplay() {
-            document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-        }
-        
-        function createClouds() {
-            const skyBackground = document.getElementById('skyBackground');
-            clouds = [];
-            
-            for (let i = 0; i < 15; i++) {
-                const cloud = document.createElement('div');
-                cloud.className = 'cloud';
-                
-                const size = Math.random() * 60 + 20;
-                const x = Math.random() * 100;
-                const y = Math.random() * 70;
-                const opacity = Math.random() * 0.1 + 0.05;
-                
-                cloud.style.width = `${size}px`;
-                cloud.style.height = `${size}px`;
-                cloud.style.left = `${x}%`;
-                cloud.style.top = `${y}%`;
-                cloud.style.opacity = opacity;
-                
-                // سحابة متعددة الطبقات
-                const layers = Math.floor(Math.random() * 3) + 2;
-                for (let j = 0; j < layers; j++) {
-                    const layer = document.createElement('div');
-                    layer.style.position = 'absolute';
-                    layer.style.width = `${size * 0.8}px`;
-                    layer.style.height = `${size * 0.8}px`;
-                    layer.style.background = 'rgba(255, 255, 255, 0.1)';
-                    layer.style.borderRadius = '50%';
-                    layer.style.left = `${Math.random() * 20}px`;
-                    layer.style.top = `${Math.random() * 20}px`;
-                    cloud.appendChild(layer);
-                }
-                
-                skyBackground.appendChild(cloud);
-                clouds.push({
-                    element: cloud,
-                    x: x,
-                    speed: Math.random() * 0.2 + 0.05
-                });
-            }
-        }
-        
-        function moveClouds() {
-            clouds.forEach(cloud => {
-                cloud.x += cloud.speed;
-                if (cloud.x > 100) cloud.x = -10;
-                cloud.element.style.left = `${cloud.x}%`;
-            });
-        }
-        
-        function createRunwayMarkings() {
-            const markings = document.getElementById('runwayMarkings');
-            
-            for (let i = 0; i < 20; i++) {
-                const mark = document.createElement('div');
-                mark.className = 'runway-mark';
-                mark.style.left = `${i * 5}%`;
-                markings.appendChild(mark);
-            }
-        }
-        
-        function updatePlaneTrail(x, y) {
-            // يمكن إضافة مسار متحرك للطائرة هنا
-        }
-        
-        function simulateRandomBet() {
-            if (gameState === 'running' && Math.random() < 0.4 && liveBets.length < 15) {
-                const bets = [100, 200, 500, 1000, 2000, 5000, 10000];
-                const betAmount = bets[Math.floor(Math.random() * bets.length)];
-                const username = Math.floor(Math.random() * 90 + 10) + '******';
-                
-                addLiveBet(username, betAmount);
-            }
-        }
-        
-        function updateLiveStats() {
-            // تحديث عدد اللاعبين النشطين
-            const activePlayers = document.getElementById('activePlayers');
-            const currentPlayers = parseInt(activePlayers.textContent.replace(/,/g, ''));
-            const change = Math.floor(Math.random() * 200) - 80;
-            const newPlayers = Math.max(25000, currentPlayers + change);
-            activePlayers.textContent = newPlayers.toLocaleString();
-            
-            // تحديث إجمالي الرهانات
-            const totalBets = document.getElementById('totalBets');
-            const currentTotal = parseFloat(totalBets.textContent.replace(/[^0-9.]/g, ''));
-            const betChange = Math.random() * 5000 - 1000;
-            const newTotal = Math.max(1000000, currentTotal + betChange);
-            
-            totalBets.textContent = newTotal.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }) + (betChange >= 0 ? ' ▲' : ' ▼');
-            totalBets.style.color = betChange >= 0 ? '#00ff88' : '#ff4444';
-        }
-        
-        function showToast(message, type = 'info') {
-            // إنشاء عنصر التبليغ
-            const toast = document.createElement('div');
-            toast.textContent = message;
-            toast.style.position = 'fixed';
-            toast.style.bottom = '30px';
-            toast.style.right = '30px';
-            toast.style.padding = '15px 25px';
-            toast.style.borderRadius = '10px';
-            toast.style.color = 'white';
-            toast.style.fontWeight = 'bold';
-            toast.style.zIndex = '10000';
-            toast.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
-            toast.style.transition = 'all 0.3s';
-            
-            // تحديد اللون حسب النوع
-            switch (type) {
-                case 'success':
-                    toast.style.background = 'linear-gradient(135deg, #00cc66, #009933)';
-                    toast.style.borderLeft = '5px solid #00ff88';
-                    break;
-                case 'error':
-                    toast.style.background = 'linear-gradient(135deg, #ff4444, #cc0000)';
-                    toast.style.borderLeft = '5px solid #ff6666';
-                    break;
-                case 'warning':
-                    toast.style.background = 'linear-gradient(135deg, #ff9900, #cc7700)';
-                    toast.style.borderLeft = '5px solid #ffbb33';
-                    break;
-                default:
-                    toast.style.background = 'linear-gradient(135deg, #0099ff, #0066cc)';
-                    toast.style.borderLeft = '5px solid #66bbff';
-            }
-            
-            document.body.appendChild(toast);
-            
-            // إزالة التبليغ بعد 3 ثواني
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300);
-            }, 3000);
-        }
-        
-        function playSoundEffect(type) {
-            // في الإصدار الحقيقي، هنا سيتم تشغيل ملفات صوتية
-            console.log(`تشغيل صوت: ${type}`);
         }
     </script>
 </body>
