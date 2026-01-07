@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameX - منصة الألعاب التنافسية</title>
+    <title>لعبة الطائرة - Crash Game</title>
     <style>
-        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
@@ -16,12 +15,12 @@
         :root {
             --primary: #FF6B00;
             --secondary: #00C2FF;
-            --dark: #0F172A;
-            --darker: #020617;
             --success: #10B981;
             --danger: #EF4444;
             --warning: #F59E0B;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --dark: #0F172A;
+            --darker: #020617;
+            --card-bg: rgba(30, 41, 59, 0.9);
             --text: #F1F5F9;
         }
         
@@ -39,10 +38,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
             border-bottom: 2px solid var(--primary);
             box-shadow: 0 4px 20px rgba(255, 107, 0, 0.2);
         }
@@ -58,197 +53,123 @@
             -webkit-text-fill-color: transparent;
         }
         
-        .logo i {
-            font-size: 2.2rem;
-            background: none;
-            -webkit-text-fill-color: var(--primary);
-        }
-        
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
-        }
-        
-        .balance {
-            background: var(--card-bg);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            border: 1px solid var(--primary);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .balance span {
-            color: var(--success);
-        }
-        
-        /* Main Layout */
-        main {
-            display: flex;
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background: rgba(15, 23, 42, 0.9);
-            padding: 1.5rem;
-            border-left: 1px solid rgba(255, 107, 0, 0.3);
-            position: fixed;
-            right: 0;
-            top: 80px;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
-        }
-        
-        .nav-links {
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .nav-links a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.8rem 1rem;
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(255, 107, 0, 0.2);
-            border-right: 3px solid var(--primary);
-        }
-        
-        /* Main Content */
-        .content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 2rem;
-        }
-        
-        /* Game Cards */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 3rem;
         }
         
-        .game-card {
+        .balance-box {
+            background: rgba(255, 107, 0, 0.1);
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+        }
+        
+        .balance-box span {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* Game Layout */
+        .game-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        /* Bet Panel */
+        .bet-panel {
             background: var(--card-bg);
             border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 1.5rem;
             border: 1px solid rgba(255, 107, 0, 0.3);
-            cursor: pointer;
+            height: fit-content;
         }
         
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+        .bet-panel h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 107, 0, 0.3);
         }
         
-        .game-header {
-            padding: 1.5rem;
-            background: linear-gradient(45deg, rgba(255,107,0,0.3), rgba(0,194,255,0.3));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .bet-amount {
+            margin-bottom: 1.5rem;
         }
         
-        .game-header h3 {
-            font-size: 1.3rem;
+        .bet-amount label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94A3B8;
         }
         
-        .players-online {
+        .amount-input {
+            width: 100%;
+            padding: 1rem;
             background: rgba(0, 0, 0, 0.5);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
         }
         
-        .game-info {
-            padding: 1.5rem;
-        }
-        
-        .odds {
-            display: flex;
-            justify-content: space-between;
+        .quick-bets {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
             margin: 1rem 0;
         }
         
-        .odd-item {
-            text-align: center;
-            flex: 1;
-            margin: 0 0.5rem;
-        }
-        
-        .odd-value {
-            display: block;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 0.8rem;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-            transition: all 0.3s;
+        .quick-bet {
+            padding: 0.7rem;
+            background: rgba(0, 194, 255, 0.1);
+            border: 1px solid var(--secondary);
+            border-radius: 8px;
+            color: white;
             cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
         }
         
-        .odd-value:hover {
-            background: var(--primary);
+        .quick-bet:hover {
+            background: var(--secondary);
             transform: scale(1.05);
         }
         
-        /* Game Canvas */
-        .game-container {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-top: 2rem;
-            display: none;
+        .auto-cashout {
+            margin-top: 1.5rem;
         }
         
-        #gameCanvas {
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            background: #000;
-            display: block;
-            margin: 0 auto;
-        }
-        
-        .game-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
+        .auto-cashout input {
+            width: 100%;
+            margin: 0.5rem 0;
         }
         
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 1rem;
             border: none;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             font-size: 1rem;
+            width: 100%;
+            margin-top: 0.5rem;
         }
         
         .btn-primary {
             background: var(--primary);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: var(--secondary);
             color: white;
         }
         
@@ -257,41 +178,209 @@
             color: white;
         }
         
-        /* Live Matches */
-        .live-matches {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--danger);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .live-badge {
+        .btn-danger {
             background: var(--danger);
             color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            animation: pulse 2s infinite;
         }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Game Area */
+        .game-area {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            text-align: center;
+        }
+        
+        .multiplier-display {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #currentMultiplier {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.1s;
+        }
+        
+        .plane-container {
+            height: 200px;
+            position: relative;
+            margin: 2rem 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        #plane {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: var(--primary);
+            transition: bottom 0.1s linear;
+        }
+        
+        .flight-path {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 107, 0, 0.5);
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .game-controls .btn {
+            flex: 1;
+        }
+        
+        /* History Panel */
+        .history-panel {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            height: fit-content;
+        }
+        
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .history-multiplier {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--success);
+        }
+        
+        .history-multiplier.crashed {
+            color: var(--danger);
+        }
+        
+        /* Bet History */
+        .bets-history {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+        }
+        
+        .bets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .bets-table th {
+            background: rgba(255, 107, 0, 0.2);
+            padding: 1rem;
+            text-align: right;
+        }
+        
+        .bets-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profit {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .loss {
+            color: var(--danger);
+            font-weight: bold;
+        }
+        
+        /* Live Bets */
+        .live-bets {
+            background: rgba(0, 194, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--secondary);
+        }
+        
+        .live-bets-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .live-bets-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .live-bet-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes explosion {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        .explosion {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #FF6B00 0%, transparent 70%);
+            border-radius: 50%;
+            animation: explosion 0.5s ease-out;
+            pointer-events: none;
+        }
+        
+        @keyframes cashoutFlash {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(16, 185, 129, 0.3); }
+        }
+        
+        .cashout-flash {
+            animation: cashoutFlash 0.5s ease-in-out 3;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            
-            .content {
-                margin-left: 0;
-            }
-            
-            .games-grid {
+        @media (max-width: 1024px) {
+            .game-layout {
                 grid-template-columns: 1fr;
             }
         }
@@ -302,753 +391,587 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <i class="fas fa-gamepad"></i>
-            <span>GameX Arena</span>
+            <i class="fas fa-plane"></i>
+            <span>Crash Plane</span>
         </div>
         
         <div class="user-info">
-            <div class="balance">
-                الرصيد: <span id="userBalance">10,000</span> نقطة
+            <div class="balance-box">
+                الرصيد: <span id="balance">10,000</span> نقطة
             </div>
-            <div class="user-avatar">
-                <i class="fas fa-user-circle" style="font-size: 2rem;"></i>
+            <div class="balance-box">
+                الربح الإجمالي: <span id="totalProfit">0</span> نقطة
             </div>
+            <button class="btn btn-secondary" style="width: auto; padding: 0.7rem 1.5rem;" onclick="addFunds()">
+                <i class="fas fa-coins"></i> إضافة رصيد
+            </button>
         </div>
     </header>
 
-    <!-- Main Layout -->
-    <main>
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <ul class="nav-links">
-                <li><a href="#" class="active" onclick="showSection('home')"><i class="fas fa-home"></i> الرئيسية</a></li>
-                <li><a href="#" onclick="showSection('games')"><i class="fas fa-futbol"></i> الألعاب الحية</a></li>
-                <li><a href="#" onclick="showSection('casino')"><i class="fas fa-dice"></i> كازينو</a></li>
-                <li><a href="#" onclick="showSection('planeGame')"><i class="fas fa-fighter-jet"></i> لعبة الطائرات</a></li>
-                <li><a href="#" onclick="showSection('leaderboard')"><i class="fas fa-trophy"></i> المتصدرين</a></li>
-                <li><a href="#" onclick="showSection('history')"><i class="fas fa-history"></i> السجل</a></li>
-                <li><a href="#" onclick="showSection('promotions')"><i class="fas fa-gift"></i> العروض</a></li>
-                <li><a href="#" onclick="showSection('help')"><i class="fas fa-question-circle"></i> المساعدة</a></li>
-            </ul>
-            
-            <div style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 10px;">
-                <h4 style="margin-bottom: 1rem; color: var(--secondary);">إحصائيات سريعة</h4>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span>المستخدمون النشطون:</span>
-                    <span style="color: var(--success);">1,247</span>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Game Layout -->
+        <div class="game-layout">
+            <!-- Left Panel: Bet Controls -->
+            <div class="bet-panel">
+                <h3><i class="fas fa-money-bill-wave"></i> لوحة الرهان</h3>
+                
+                <div class="bet-amount">
+                    <label>مبلغ الرهان:</label>
+                    <input type="number" id="betAmount" class="amount-input" value="100" min="10" step="10">
+                    
+                    <div class="quick-bets">
+                        <div class="quick-bet" onclick="setBetAmount(50)">50</div>
+                        <div class="quick-bet" onclick="setBetAmount(100)">100</div>
+                        <div class="quick-bet" onclick="setBetAmount(500)">500</div>
+                        <div class="quick-bet" onclick="setBetAmount(1000)">1,000</div>
+                        <div class="quick-bet" onclick="setBetAmount(2000)">2,000</div>
+                        <div class="quick-bet" onclick="setBetAmount(5000)">5,000</div>
+                    </div>
                 </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span>المباريات النشطة:</span>
-                    <span style="color: var(--warning);">48</span>
+                
+                <div class="auto-cashout">
+                    <label>السحب التلقائي عند المضاعف:</label>
+                    <input type="range" id="autoCashout" min="1.1" max="10" step="0.1" value="2">
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                        <span id="autoCashoutValue">2.0x</span>
+                        <span>10x</span>
+                    </div>
+                </div>
+                
+                <button id="placeBetBtn" class="btn btn-primary" onclick="placeBet()">
+                    <i class="fas fa-plane"></i> بدأ الرحلة
+                </button>
+                
+                <button id="cashoutBtn" class="btn btn-success" onclick="cashout()" disabled>
+                    <i class="fas fa-hand-holding-usd"></i> سحب الآن
+                </button>
+                
+                <button class="btn btn-danger" onclick="resetGame()">
+                    <i class="fas fa-redo"></i> إعادة تعيين
+                </button>
+            </div>
+            
+            <!-- Center: Game Area -->
+            <div class="game-area">
+                <h2><i class="fas fa-fighter-jet"></i> لعبة الطائرة</h2>
+                <p style="color: #94A3B8; margin-bottom: 1rem;">سحب قبل أن تنفجر الطائرة لربح المضاعف!</p>
+                
+                <div class="multiplier-display">
+                    <span id="currentMultiplier">1.00x</span>
+                </div>
+                
+                <div class="plane-container" id="planeContainer">
+                    <div class="flight-path"></div>
+                    <div id="plane">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-around; margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                    <div>
+                        <div style="color: #94A3B8;">أعلى ربح</div>
+                        <div id="highestWin" style="font-size: 1.5rem; color: var(--success);">0</div>
+                    </div>
+                    <div>
+                        <div style="color: #94A3B8;">الرهان النشط</div>
+                        <div id="activeBet" style="font-size: 1.5rem; color: var(--primary);">0</div>
+                    </div>
+                    <div>
+                        <div style="color: #94A3B8;">اللاعبون النشطون</div>
+                        <div id="activePlayers" style="font-size: 1.5rem; color: var(--secondary);">0</div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button class="btn btn-secondary" onclick="autoBet()">
+                        <i class="fas fa-robot"></i> رهان تلقائي
+                    </button>
+                    <button class="btn btn-secondary" onclick="doubleBet()">
+                        <i class="fas fa-times-circle"></i> مضاعفة الرهان
+                    </button>
                 </div>
             </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="content" id="contentArea">
-            <!-- Home Section -->
-            <section id="homeSection">
-                <h1 style="margin-bottom: 1.5rem; color: var(--secondary);">مرحباً بك في GameX Arena!</h1>
-                
-                <!-- Live Matches -->
-                <div class="live-matches">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
-                        <span class="live-badge">مباشر</span>
-                        <h3>المباريات الحية الآن</h3>
-                    </div>
-                    <div id="liveMatchesList">
-                        <!-- Live matches will be added here by JS -->
-                    </div>
-                </div>
-                
-                <!-- Games Grid -->
-                <h2 style="margin: 2rem 0 1rem; color: var(--primary);">الألعاب الشعبية</h2>
-                <div class="games-grid">
-                    <!-- Game 1: Football -->
-                    <div class="game-card" onclick="openGame('football')">
-                        <div class="game-header">
-                            <h3><i class="fas fa-futbol"></i> كرة القدم</h3>
-                            <div class="players-online"><i class="fas fa-users"></i> 342</div>
-                        </div>
-                        <div class="game-info">
-                            <p>تنبأ بنتيجة المباراة واربح نقاط!</p>
-                            <div class="odds">
-                                <div class="odd-item">
-                                    <span>فريق أ</span>
-                                    <div class="odd-value" onclick="placeBet('teamA', 1.85)">1.85</div>
-                                </div>
-                                <div class="odd-item">
-                                    <span>تعادل</span>
-                                    <div class="odd-value" onclick="placeBet('draw', 3.20)">3.20</div>
-                                </div>
-                                <div class="odd-item">
-                                    <span>فريق ب</span>
-                                    <div class="odd-value" onclick="placeBet('teamB', 2.10)">2.10</div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" style="width: 100%;">المشاركة الآن</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Game 2: Basketball -->
-                    <div class="game-card" onclick="openGame('basketball')">
-                        <div class="game-header">
-                            <h3><i class="fas fa-basketball-ball"></i> كرة السلة</h3>
-                            <div class="players-online"><i class="fas fa-users"></i> 187</div>
-                        </div>
-                        <div class="game-info">
-                            <p>من سيفوز بالمباراة؟</p>
-                            <div class="odds">
-                                <div class="odd-item">
-                                    <span>الفريق الأحمر</span>
-                                    <div class="odd-value" onclick="placeBet('redTeam', 1.65)">1.65</div>
-                                </div>
-                                <div class="odd-item">
-                                    <span>الفريق الأزرق</span>
-                                    <div class="odd-value" onclick="placeBet('blueTeam', 2.15)">2.15</div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" style="width: 100%;">المشاركة الآن</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Game 3: Plane Game -->
-                    <div class="game-card" onclick="openGame('planeGame')">
-                        <div class="game-header">
-                            <h3><i class="fas fa-fighter-jet"></i> معركة الطائرات</h3>
-                            <div class="players-online"><i class="fas fa-users"></i> 89</div>
-                        </div>
-                        <div class="game-info">
-                            <p>لعبة طائرات متعددة اللاعبين - انضم للمعركة!</p>
-                            <div style="text-align: center; margin: 1rem 0;">
-                                <div style="font-size: 2rem; color: var(--secondary);">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                            </div>
-                            <button class="btn btn-success" style="width: 100%;" onclick="showPlaneGame()">ابدأ اللعبة</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Game 4: Casino -->
-                    <div class="game-card" onclick="openGame('casino')">
-                        <div class="game-header">
-                            <h3><i class="fas fa-dice"></i> كازينو مباشر</h3>
-                            <div class="players-online"><i class="fas fa-users"></i> 423</div>
-                        </div>
-                        <div class="game-info">
-                            <p>روليت، بلاك جاك، سلوتس وأكثر!</p>
-                            <div style="display: flex; justify-content: space-around; margin: 1rem 0;">
-                                <span style="font-size: 2rem;"><i class="fas fa-dice-one"></i></span>
-                                <span style="font-size: 2rem;"><i class="fas fa-dice-two"></i></span>
-                                <span style="font-size: 2rem;"><i class="fas fa-dice-three"></i></span>
-                            </div>
-                            <button class="btn btn-secondary" style="width: 100%;">دخول الكازينو</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
             
-            <!-- Plane Game Section -->
-            <section id="planeGameSection" style="display: none;">
-                <h2 style="margin-bottom: 1rem; color: var(--primary);">
-                    <i class="fas fa-fighter-jet"></i> معركة الطائرات
-                </h2>
-                
-                <div class="game-container" id="planeGameContainer">
-                    <canvas id="gameCanvas" width="800" height="500"></canvas>
-                    
-                    <div style="text-align: center; margin-top: 1rem;">
-                        <div style="display: inline-block; background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 10px;">
-                            <div style="margin-bottom: 0.5rem;">
-                                <span>النقاط: <span id="score">0</span></span>
-                                <span style="margin: 0 1rem;">|</span>
-                                <span>الأعداء: <span id="enemies">10</span></span>
-                                <span style="margin: 0 1rem;">|</span>
-                                <span>الصحة: <span id="health">100</span>%</span>
-                            </div>
-                            <div class="game-controls">
-                                <button class="btn btn-primary" onclick="startGame()">
-                                    <i class="fas fa-play"></i> بدأ اللعبة
-                                </button>
-                                <button class="btn btn-secondary" onclick="pauseGame()">
-                                    <i class="fas fa-pause"></i> إيقاف
-                                </button>
-                                <button class="btn btn-success" onclick="upgradePlane()">
-                                    <i class="fas fa-wrench"></i> ترقية الطائرة (500 نقطة)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 2rem; background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 10px;">
-                        <h4 style="color: var(--secondary); margin-bottom: 1rem;">كيفية اللعب:</h4>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 2rem; color: var(--primary);">
-                                    <i class="fas fa-mouse-pointer"></i>
-                                </div>
-                                <div>حرك الماوس للتحكم</div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 2rem; color: var(--danger);">
-                                    <i class="fas fa-mouse"></i>
-                                </div>
-                                <div>انقر لإطلاق النار</div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 2rem; color: var(--success);">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div>اجمع الطاقة للترقية</div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Right Panel: History -->
+            <div class="history-panel">
+                <h3><i class="fas fa-history"></i> تاريخ الرحلات</h3>
+                <div class="history-list" id="crashHistory">
+                    <!-- History will be populated by JS -->
                 </div>
-            </section>
-            
-            <!-- Betting History -->
-            <div id="historySection" style="display: none;">
-                <h2 style="margin-bottom: 1rem; color: var(--primary);">سجل الرهانات</h2>
-                <div style="background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: rgba(255,107,0,0.3);">
-                                <th style="padding: 1rem; text-align: right;">اللعبة</th>
-                                <th style="padding: 1rem; text-align: right;">الرهان</th>
-                                <th style="padding: 1rem; text-align: right;">المبلغ</th>
-                                <th style="padding: 1rem; text-align: right;">الناتج</th>
-                                <th style="padding: 1rem; text-align: right;">الحالة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="betHistory">
-                            <!-- History will be populated by JS -->
-                        </tbody>
-                    </table>
+                
+                <div class="live-bets">
+                    <div class="live-bets-title">
+                        <i class="fas fa-bolt"></i>
+                        <span>الرهانات الحية</span>
+                    </div>
+                    <div class="live-bets-list" id="liveBets">
+                        <!-- Live bets will appear here -->
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer style="background: rgba(0,0,0,0.8); padding: 2rem; text-align: center; margin-top: 3rem; border-top: 1px solid rgba(255,107,0,0.3);">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
-                <a href="#" style="color: var(--text); text-decoration: none;">الشروط والأحكام</a>
-                <a href="#" style="color: var(--text); text-decoration: none;">سياسة الخصوصية</a>
-                <a href="#" style="color: var(--text); text-decoration: none;">اتصل بنا</a>
-            </div>
-            <div style="color: #94A3B8; font-size: 0.9rem;">
-                <p>هذه منصة لمحاكاة الألعاب باستخدام نقاط وهمية فقط. لا تتضمن مقامرة حقيقية.</p>
-                <p style="margin-top: 0.5rem;">© 2024 GameX Arena. جميع الحقوق محفوظة.</p>
-            </div>
+        
+        <!-- Bet History -->
+        <div class="bets-history">
+            <h3><i class="fas fa-list-alt"></i> سجل رهاناتك</h3>
+            <table class="bets-table">
+                <thead>
+                    <tr>
+                        <th>الوقت</th>
+                        <th>المبلغ</th>
+                        <th>المضاعف</th>
+                        <th>السحب عند</th>
+                        <th>الربح</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="userBetsHistory">
+                    <!-- User bets will appear here -->
+                </tbody>
+            </table>
         </div>
-    </footer>
+    </div>
+
+    <!-- Game Instructions Modal -->
+    <div id="instructions" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); padding: 2rem; border-radius: 15px; border: 2px solid var(--primary); max-width: 500px; width: 90%; z-index: 1000; display: none;">
+        <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> كيفية اللعب</h3>
+        <ol style="margin-right: 1.5rem; margin-bottom: 1.5rem;">
+            <li style="margin-bottom: 0.5rem;">اختر مبلغ الرهان</li>
+            <li style="margin-bottom: 0.5rem;">اضغط على "بدأ الرحلة"</li>
+            <li style="margin-bottom: 0.5rem;">الطائرة تبدأ الطيران والمضاعف يزداد</li>
+            <li style="margin-bottom: 0.5rem;">اسحب أموالك قبل أن تنفجر الطائرة</li>
+            <li style="margin-bottom: 0.5rem;">إذا انفجرت قبل السحب، تخسر الرهان</li>
+        </ol>
+        <button class="btn btn-primary" onclick="closeInstructions()">بدأ اللعب</button>
+    </div>
 
     <script>
-        // البيانات والمتغيرات العامة
-        let userBalance = 10000;
+        // بيانات اللعبة
+        let balance = 10000;
+        let totalProfit = 0;
+        let currentBet = 0;
+        let currentMultiplier = 1.00;
         let gameActive = false;
+        let planePosition = 0;
+        let crashPoint = 0;
         let gameInterval;
-        let planeGame = {
-            score: 0,
-            enemies: 10,
-            health: 100,
-            planeLevel: 1,
-            bullets: []
-        };
+        let autoCashoutValue = 2.0;
+        let isAutoCashout = false;
         
-        // المحاكاة: مباريات حية
-        const liveMatches = [
-            { id: 1, team1: "النادي الأهلي", team2: "الزمالك", score: "2-1", minute: "67'" },
-            { id: 2, team1: "ريال مدريد", team2: "برشلونة", score: "1-0", minute: "45'" },
-            { id: 3, team1: "مانشستر يونايتد", team2: "ليفربول", score: "0-0", minute: "30'" }
-        ];
+        // المحاكاة: لاعبين افتراضيين
+        let activePlayers = 0;
+        let highestWin = 0;
         
-        // المحاكاة: سجل الرهانات
-        const betHistory = [
-            { game: "كرة القدم", bet: "فوز فريق أ", amount: "500", outcome: "+925", status: "فاز" },
-            { game: "كرة السلة", bet: "الفريق الأحمر", amount: "300", outcome: "-300", status: "خسر" },
-            { game: "التنس", bet: "لاعب 1", amount: "700", outcome: "+1400", status: "فاز" }
-        ];
+        // التاريخ
+        let crashHistory = [];
+        let userBets = [];
+        let liveBets = [];
         
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            updateLiveMatches();
-            updateBetHistory();
-            initPlaneGame();
+            updateDisplay();
+            generateInitialHistory();
+            simulateLiveBets();
+            showInstructions();
+            
+            // تحديث قيمة السحب التلقائي
+            document.getElementById('autoCashout').addEventListener('input', function() {
+                autoCashoutValue = parseFloat(this.value);
+                document.getElementById('autoCashoutValue').textContent = autoCashoutValue.toFixed(1) + 'x';
+            });
         });
         
-        // تحديث المباريات الحية
-        function updateLiveMatches() {
-            const container = document.getElementById('liveMatchesList');
-            container.innerHTML = '';
+        // عرض التعليمات
+        function showInstructions() {
+            document.getElementById('instructions').style.display = 'block';
+        }
+        
+        function closeInstructions() {
+            document.getElementById('instructions').style.display = 'none';
+        }
+        
+        // تحديث العرض
+        function updateDisplay() {
+            document.getElementById('balance').textContent = balance.toLocaleString();
+            document.getElementById('totalProfit').textContent = totalProfit.toLocaleString();
+            document.getElementById('highestWin').textContent = highestWin.toLocaleString();
+            document.getElementById('activeBet').textContent = currentBet.toLocaleString();
+            document.getElementById('activePlayers').textContent = activePlayers;
+        }
+        
+        // تعيين مبلغ الرهان
+        function setBetAmount(amount) {
+            document.getElementById('betAmount').value = amount;
+            updateDisplay();
+        }
+        
+        // وضع رهان
+        function placeBet() {
+            if (gameActive) {
+                alert('اللعبة قيد التشغيل بالفعل!');
+                return;
+            }
             
-            liveMatches.forEach(match => {
-                const matchElement = document.createElement('div');
-                matchElement.style.cssText = `
-                    background: rgba(0,0,0,0.3);
-                    padding: 1rem;
-                    border-radius: 8px;
-                    margin-bottom: 0.5rem;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                `;
+            const betAmount = parseInt(document.getElementById('betAmount').value);
+            
+            if (betAmount < 10) {
+                alert('الحد الأدنى للرهان هو 10 نقاط');
+                return;
+            }
+            
+            if (betAmount > balance) {
+                alert('رصيدك غير كافي!');
+                return;
+            }
+            
+            // خصم الرهان
+            balance -= betAmount;
+            currentBet = betAmount;
+            gameActive = true;
+            
+            // إعادة تعيين اللعبة
+            currentMultiplier = 1.00;
+            planePosition = 0;
+            
+            // إنشاء نقطة الانفجار (بين 1.1x و 20x)
+            crashPoint = 1.1 + Math.random() * 18.9;
+            
+            // تحديث واجهة المستخدم
+            document.getElementById('placeBetBtn').disabled = true;
+            document.getElementById('cashoutBtn').disabled = false;
+            document.getElementById('currentMultiplier').textContent = currentMultiplier.toFixed(2) + 'x';
+            document.getElementById('plane').style.bottom = '20px';
+            
+            // إضافة رهان حي
+            const liveBet = {
+                id: Date.now(),
+                player: 'أنت',
+                amount: betAmount,
+                multiplier: 1.00,
+                cashoutAt: null
+            };
+            liveBets.push(liveBet);
+            updateLiveBets();
+            
+            // محاكاة لاعبين جدد
+            activePlayers = 3 + Math.floor(Math.random() * 10);
+            
+            // بدأ اللعبة
+            gameInterval = setInterval(updateGame, 50);
+            
+            updateDisplay();
+        }
+        
+        // تحديث اللعبة
+        function updateGame() {
+            if (!gameActive) return;
+            
+            // زيادة المضاعف
+            const increment = 0.01 + (currentMultiplier * 0.001);
+            currentMultiplier += increment;
+            
+            // تحريك الطائرة
+            planePosition += 1;
+            const planeElement = document.getElementById('plane');
+            const containerHeight = document.getElementById('planeContainer').clientHeight;
+            const newBottom = 20 + (planePosition * 0.5);
+            
+            if (newBottom < containerHeight - 50) {
+                planeElement.style.bottom = newBottom + 'px';
+            }
+            
+            // تحديث العرض
+            document.getElementById('currentMultiplier').textContent = currentMultiplier.toFixed(2) + 'x';
+            
+            // تحديث الرهانات الحية
+            updatePlayerMultipliers();
+            
+            // تحقق من السحب التلقائي
+            if (isAutoCashout && currentMultiplier >= autoCashoutValue) {
+                cashout();
+                return;
+            }
+            
+            // تحقق من الانفجار
+            if (currentMultiplier >= crashPoint) {
+                crash();
+            }
+        }
+        
+        // سحب الأموال
+        function cashout() {
+            if (!gameActive || currentBet === 0) return;
+            
+            // حساب الربح
+            const profit = Math.floor(currentBet * currentMultiplier);
+            balance += profit;
+            totalProfit += (profit - currentBet);
+            
+            // تحديث أعلى ربح
+            if (profit > highestWin) {
+                highestWin = profit;
+            }
+            
+            // إضافة للسجل
+            userBets.unshift({
+                time: new Date().toLocaleTimeString(),
+                amount: currentBet,
+                multiplier: currentMultiplier.toFixed(2),
+                cashoutAt: currentMultiplier.toFixed(2),
+                profit: profit - currentBet,
+                status: 'فاز'
+            });
+            
+            // إزالة من الرهانات الحية
+            liveBets = liveBets.filter(bet => bet.player !== 'أنت');
+            updateLiveBets();
+            
+            // عرض الرسالة
+            alert(`مبروك! سحبت عند ${currentMultiplier.toFixed(2)}x\nالربح: ${(profit - currentBet).toLocaleString()} نقطة`);
+            
+            // تأثير بصرية
+            document.getElementById('planeContainer').classList.add('cashout-flash');
+            setTimeout(() => {
+                document.getElementById('planeContainer').classList.remove('cashout-flash');
+            }, 1500);
+            
+            // إعادة تعيين اللعبة
+            resetGameState();
+            updateHistory();
+            updateUserBets();
+            updateDisplay();
+        }
+        
+        // انفجار الطائرة
+        function crash() {
+            if (!gameActive) return;
+            
+            clearInterval(gameInterval);
+            
+            // إضافة للتاريخ
+            crashHistory.unshift({
+                multiplier: crashPoint.toFixed(2),
+                time: new Date().toLocaleTimeString()
+            });
+            
+            // تحديث حالة الرهان
+            userBets.unshift({
+                time: new Date().toLocaleTimeString(),
+                amount: currentBet,
+                multiplier: currentMultiplier.toFixed(2),
+                cashoutAt: 'انفجار',
+                profit: -currentBet,
+                status: 'خسر'
+            });
+            
+            // تأثير الانفجار
+            const planeContainer = document.getElementById('planeContainer');
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = '50%';
+            explosion.style.top = document.getElementById('plane').style.bottom;
+            planeContainer.appendChild(explosion);
+            
+            // إزالة الرهانات الحية
+            liveBets = liveBets.filter(bet => bet.player !== 'أنت');
+            updateLiveBets();
+            
+            // عرض الرسالة
+            setTimeout(() => {
+                alert(`انفجار! الطائرة انفجرت عند ${crashPoint.toFixed(2)}x\nخسارة: ${currentBet.toLocaleString()} نقطة`);
                 
-                matchElement.innerHTML = `
-                    <div style="flex: 1;">
-                        <div style="font-weight: bold;">${match.team1} vs ${match.team2}</div>
-                        <div style="font-size: 0.9rem; color: #94A3B8;">الدقيقة: ${match.minute}</div>
-                    </div>
-                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">
-                        ${match.score}
-                    </div>
-                    <button class="btn btn-primary" style="margin-right: 1rem;" onclick="betOnMatch(${match.id})">
-                        راهن الآن
-                    </button>
-                `;
+                // إعادة تعيين اللعبة
+                resetGameState();
+                updateHistory();
+                updateUserBets();
+                updateDisplay();
                 
-                container.appendChild(matchElement);
+                // إزالة تأثير الانفجار
+                explosion.remove();
+            }, 500);
+        }
+        
+        // إعادة تعيين حالة اللعبة
+        function resetGameState() {
+            gameActive = false;
+            currentBet = 0;
+            currentMultiplier = 1.00;
+            planePosition = 0;
+            
+            document.getElementById('placeBetBtn').disabled = false;
+            document.getElementById('cashoutBtn').disabled = true;
+            document.getElementById('currentMultiplier').textContent = '1.00x';
+            document.getElementById('plane').style.bottom = '20px';
+            
+            clearInterval(gameInterval);
+            
+            // محاكاة تغيير اللاعبين
+            activePlayers = Math.floor(Math.random() * 5);
+        }
+        
+        // إعادة تعيين كاملة
+        function resetGame() {
+            if (gameActive && confirm('هل تريد إلغاء الرهان الحالي؟')) {
+                balance += currentBet; // استعادة الرهان
+                resetGameState();
+                updateDisplay();
+            }
+        }
+        
+        // تحديث تاريخ الانفجارات
+        function updateHistory() {
+            const historyList = document.getElementById('crashHistory');
+            historyList.innerHTML = '';
+            
+            crashHistory.slice(0, 10).forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div>
+                        <div style="font-size: 0.9rem; color: #94A3B8;">${item.time}</div>
+                    </div>
+                    <div class="history-multiplier crashed">${item.multiplier}x</div>
+                `;
+                historyList.appendChild(historyItem);
             });
         }
         
-        // تحديث سجل الرهانات
-        function updateBetHistory() {
-            const container = document.getElementById('betHistory');
-            container.innerHTML = '';
+        // تحديث رهانات المستخدم
+        function updateUserBets() {
+            const historyBody = document.getElementById('userBetsHistory');
+            historyBody.innerHTML = '';
             
-            betHistory.forEach(bet => {
+            userBets.slice(0, 10).forEach(bet => {
                 const row = document.createElement('tr');
-                row.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
-                
-                const statusColor = bet.status === 'فاز' ? 'var(--success)' : 'var(--danger)';
+                const profitClass = bet.profit >= 0 ? 'profit' : 'loss';
+                const profitSign = bet.profit >= 0 ? '+' : '';
                 
                 row.innerHTML = `
-                    <td style="padding: 1rem;">${bet.game}</td>
-                    <td style="padding: 1rem;">${bet.bet}</td>
-                    <td style="padding: 1rem;">${bet.amount} نقطة</td>
-                    <td style="padding: 1rem; color: ${statusColor}">${bet.outcome}</td>
-                    <td style="padding: 1rem;">
-                        <span style="background: ${statusColor}; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem;">
+                    <td>${bet.time}</td>
+                    <td>${bet.amount.toLocaleString()}</td>
+                    <td>${bet.multiplier}x</td>
+                    <td>${bet.cashoutAt}x</td>
+                    <td class="${profitClass}">${profitSign}${bet.profit.toLocaleString()}</td>
+                    <td>
+                        <span style="background: ${bet.status === 'فاز' ? 'var(--success)' : 'var(--danger)'}; 
+                              padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.9rem;">
                             ${bet.status}
                         </span>
                     </td>
                 `;
-                
-                container.appendChild(row);
+                historyBody.appendChild(row);
             });
         }
         
-        // عرض الأقسام
-        function showSection(sectionId) {
-            // إخفاء كل الأقسام
-            document.getElementById('homeSection').style.display = 'none';
-            document.getElementById('planeGameSection').style.display = 'none';
-            document.getElementById('historySection').style.display = 'none';
+        // تحديث الرهانات الحية
+        function updateLiveBets() {
+            const liveBetsList = document.getElementById('liveBets');
+            liveBetsList.innerHTML = '';
             
-            // إظهار القسم المطلوب
-            if (sectionId === 'home') {
-                document.getElementById('homeSection').style.display = 'block';
-            } else if (sectionId === 'planeGame') {
-                showPlaneGame();
-            } else if (sectionId === 'history') {
-                document.getElementById('historySection').style.display = 'block';
-            }
-            
-            // تحديث القائمة النشطة
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
+            liveBets.slice(0, 5).forEach(bet => {
+                const betItem = document.createElement('div');
+                betItem.className = 'live-bet-item';
+                
+                const playerName = bet.player === 'أنت' ? 
+                    `<span style="color: var(--primary);">${bet.player}</span>` : 
+                    bet.player;
+                
+                betItem.innerHTML = `
+                    <div>${playerName}</div>
+                    <div>${bet.amount.toLocaleString()}</div>
+                    <div style="color: var(--warning);">${bet.multiplier.toFixed(2)}x</div>
+                `;
+                liveBetsList.appendChild(betItem);
             });
-            event.target.classList.add('active');
         }
         
-        // فتح لعبة
-        function openGame(gameType) {
-            if (gameType === 'planeGame') {
-                showPlaneGame();
-            } else {
-                alert(`جاري فتح ${gameType}... (محاكاة)`);
-            }
-        }
-        
-        // عرض لعبة الطائرات
-        function showPlaneGame() {
-            document.getElementById('homeSection').style.display = 'none';
-            document.getElementById('planeGameSection').style.display = 'block';
-            document.getElementById('historySection').style.display = 'none';
-        }
-        
-        // وضع رهان
-        function placeBet(team, odds) {
-            const amount = prompt(`كم نقطة تريد الرهان على ${team}؟\nالفرص: ${odds}\nرصيدك: ${userBalance}`);
-            
-            if (amount && !isNaN(amount) && amount > 0) {
-                const betAmount = parseInt(amount);
-                
-                if (betAmount > userBalance) {
-                    alert('رصيدك غير كافي!');
-                    return;
-                }
-                
-                userBalance -= betAmount;
-                document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-                
-                // محاكاة نتيجة عشوائية
-                const win = Math.random() > 0.5;
-                let message = `لقد راهنت ${betAmount} نقطة على ${team}`;
-                
-                if (win) {
-                    const winnings = Math.round(betAmount * odds);
-                    userBalance += winnings;
-                    document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-                    message += `\nمبروك! لقد فزت ${winnings} نقطة!`;
+        // تحديث مضاعفات اللاعبين
+        function updatePlayerMultipliers() {
+            liveBets.forEach(bet => {
+                if (bet.player !== 'أنت') {
+                    // زيادة عشوائية لمضاعفات اللاعبين الآخرين
+                    bet.multiplier += 0.01 + Math.random() * 0.02;
+                    
+                    // بعض اللاعبين يسحبون عشوائياً
+                    if (Math.random() < 0.02 && bet.multiplier > 1.5) {
+                        liveBets = liveBets.filter(b => b.id !== bet.id);
+                    }
                 } else {
-                    message += `\nللأسف، خسرت الرهان.`;
+                    bet.multiplier = currentMultiplier;
                 }
-                
-                alert(message);
-                
-                // تحديث السجل
-                updateBetHistory();
-            }
-        }
-        
-        // الرهان على مباراة
-        function betOnMatch(matchId) {
-            const match = liveMatches.find(m => m.id === matchId);
-            if (match) {
-                const choice = prompt(`اختر الرهان:\n1. فوز ${match.team1}\n2. تعادل\n3. فوز ${match.team2}`);
-                if (choice) {
-                    const odds = [1.85, 3.20, 2.10];
-                    placeBet(['team1', 'draw', 'team2'][choice-1], odds[choice-1]);
-                }
-            }
-        }
-        
-        // ========== لعبة الطائرات ==========
-        function initPlaneGame() {
-            const canvas = document.getElementById('gameCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // كائن الطائرة
-            const plane = {
-                x: canvas.width / 2,
-                y: canvas.height - 50,
-                width: 40,
-                height: 40,
-                color: '#00C2FF',
-                speed: 5
-            };
-            
-            // الأعداء
-            let enemies = [];
-            
-            // الطاقة
-            let powerUps = [];
-            
-            // التحكم بالماوس
-            canvas.addEventListener('mousemove', function(e) {
-                const rect = canvas.getBoundingClientRect();
-                plane.x = e.clientX - rect.left;
-                plane.y = e.clientY - rect.top;
-                
-                // حدود الشاشة
-                plane.x = Math.max(plane.width/2, Math.min(canvas.width - plane.width/2, plane.x));
-                plane.y = Math.max(plane.height/2, Math.min(canvas.height - plane.height/2, plane.y));
             });
-            
-            // إطلاق النار
-            canvas.addEventListener('click', function() {
-                if (!gameActive) return;
-                
-                planeGame.bullets.push({
-                    x: plane.x,
-                    y: plane.y,
-                    width: 5,
-                    height: 15,
-                    speed: 10,
-                    color: '#FF6B00'
-                });
-            });
-            
-            // رسم الطائرة
-            function drawPlane() {
-                ctx.save();
-                ctx.translate(plane.x, plane.y);
-                
-                // جسم الطائرة
-                ctx.fillStyle = plane.color;
-                ctx.beginPath();
-                ctx.moveTo(0, -plane.height/2);
-                ctx.lineTo(-plane.width/2, plane.height/2);
-                ctx.lineTo(plane.width/2, plane.height/2);
-                ctx.closePath();
-                ctx.fill();
-                
-                // المحركات
-                ctx.fillStyle = '#FF6B00';
-                ctx.fillRect(-15, plane.height/2 - 5, 10, 10);
-                ctx.fillRect(5, plane.height/2 - 5, 10, 10);
-                
-                ctx.restore();
+            updateLiveBets();
+        }
+        
+        // توليد تاريخ ابتدائي
+        function generateInitialHistory() {
+            for (let i = 0; i < 10; i++) {
+                const multiplier = (1.1 + Math.random() * 5).toFixed(2);
+                const time = new Date(Date.now() - i * 60000).toLocaleTimeString();
+                crashHistory.push({ multiplier, time });
             }
-            
-            // رسم الرصاص
-            function drawBullets() {
-                for (let i = planeGame.bullets.length - 1; i >= 0; i--) {
-                    const bullet = planeGame.bullets[i];
-                    bullet.y -= bullet.speed;
+            updateHistory();
+        }
+        
+        // محاكاة رهانات حية
+        function simulateLiveBets() {
+            setInterval(() => {
+                if (!gameActive) {
+                    // إضافة لاعبين افتراضيين
+                    const playerNames = ['محمد', 'أحمد', 'خالد', 'سارة', 'فاطمة', 'علي'];
+                    const randomName = playerNames[Math.floor(Math.random() * playerNames.length)];
                     
-                    if (bullet.y < 0) {
-                        planeGame.bullets.splice(i, 1);
-                        continue;
+                    if (liveBets.length < 8 && Math.random() < 0.3) {
+                        liveBets.push({
+                            id: Date.now() + Math.random(),
+                            player: randomName,
+                            amount: 50 + Math.floor(Math.random() * 500),
+                            multiplier: 1.00,
+                            cashoutAt: null
+                        });
+                        updateLiveBets();
                     }
                     
-                    ctx.fillStyle = bullet.color;
-                    ctx.fillRect(bullet.x - bullet.width/2, bullet.y - bullet.height/2, bullet.width, bullet.height);
-                }
-            }
-            
-            // إنشاء الأعداء
-            function createEnemy() {
-                if (!gameActive) return;
-                
-                if (enemies.length < 5 && Math.random() < 0.02) {
-                    enemies.push({
-                        x: Math.random() * (canvas.width - 30) + 15,
-                        y: -30,
-                        width: 30,
-                        height: 30,
-                        speed: 2 + Math.random() * 2,
-                        color: '#EF4444'
-                    });
-                }
-            }
-            
-            // رسم الأعداء
-            function drawEnemies() {
-                for (let i = enemies.length - 1; i >= 0; i--) {
-                    const enemy = enemies[i];
-                    enemy.y += enemy.speed;
-                    
-                    // تحقق إذا وصل للأسفل
-                    if (enemy.y > canvas.height) {
-                        enemies.splice(i, 1);
-                        planeGame.health -= 10;
-                        updateGameStats();
-                        continue;
-                    }
-                    
-                    // رسم العدو
-                    ctx.fillStyle = enemy.color;
-                    ctx.beginPath();
-                    ctx.arc(enemy.x, enemy.y, enemy.width/2, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // تحقق من التصادم مع الرصاص
-                    for (let j = planeGame.bullets.length - 1; j >= 0; j--) {
-                        const bullet = planeGame.bullets[j];
-                        const dx = bullet.x - enemy.x;
-                        const dy = bullet.y - enemy.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < enemy.width/2 + bullet.width/2) {
-                            enemies.splice(i, 1);
-                            planeGame.bullets.splice(j, 1);
-                            planeGame.score += 100;
-                            planeGame.enemies--;
-                            updateGameStats();
-                            
-                            // إنشاء طاقة أحياناً
-                            if (Math.random() < 0.3) {
-                                powerUps.push({
-                                    x: enemy.x,
-                                    y: enemy.y,
-                                    width: 20,
-                                    height: 20,
-                                    type: Math.random() > 0.5 ? 'health' : 'score',
-                                    color: Math.random() > 0.5 ? '#10B981' : '#F59E0B'
-                                });
-                            }
-                            break;
-                        }
+                    // إزالة بعض الرهانات
+                    if (Math.random() < 0.2 && liveBets.length > 0) {
+                        liveBets.shift();
+                        updateLiveBets();
                     }
                 }
-            }
+            }, 3000);
+        }
+        
+        // رهان تلقائي
+        function autoBet() {
+            isAutoCashout = !isAutoCashout;
+            const btn = document.querySelector('.game-controls .btn:nth-child(1)');
             
-            // رسم الطاقة
-            function drawPowerUps() {
-                for (let i = powerUps.length - 1; i >= 0; i--) {
-                    const power = powerUps[i];
-                    power.y += 2;
-                    
-                    if (power.y > canvas.height) {
-                        powerUps.splice(i, 1);
-                        continue;
-                    }
-                    
-                    // رسم الطاقة
-                    ctx.fillStyle = power.color;
-                    ctx.beginPath();
-                    ctx.arc(power.x, power.y, power.width/2, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // تحقق من التجميع
-                    const dx = plane.x - power.x;
-                    const dy = plane.y - power.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < plane.width/2 + power.width/2) {
-                        if (power.type === 'health') {
-                            planeGame.health = Math.min(100, planeGame.health + 20);
-                        } else {
-                            planeGame.score += 500;
-                        }
-                        powerUps.splice(i, 1);
-                        updateGameStats();
-                    }
-                }
-            }
-            
-            // دورة اللعبة
-            function gameLoop() {
-                if (!gameActive) return;
-                
-                // مسح الشاشة
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // رسم الخلفية
-                drawBackground();
-                
-                // رسم العناصر
-                drawPlane();
-                drawBullets();
-                drawEnemies();
-                drawPowerUps();
-                
-                // إنشاء أعداء جدد
-                createEnemy();
-                
-                // تحقق من انتهاء اللعبة
-                if (planeGame.health <= 0) {
-                    endGame();
-                }
-                
-                if (planeGame.enemies <= 0) {
-                    winGame();
-                }
-            }
-            
-            // رسم الخلفية
-            function drawBackground() {
-                // النجوم
-                ctx.fillStyle = 'white';
-                for (let i = 0; i < 50; i++) {
-                    const x = (i * 17) % canvas.width;
-                    const y = (i * 23) % canvas.height;
-                    ctx.fillRect(x, y, 2, 2);
-                }
-                
-                // السحب
-                ctx.fillStyle = 'rgba(100, 100, 100, 0.3)';
-                ctx.beginPath();
-                ctx.arc(200, 100, 40, 0, Math.PI * 2);
-                ctx.arc(250, 90, 30, 0, Math.PI * 2);
-                ctx.arc(300, 100, 35, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            // تحديث الإحصائيات
-            function updateGameStats() {
-                document.getElementById('score').textContent = planeGame.score;
-                document.getElementById('enemies').textContent = planeGame.enemies;
-                document.getElementById('health').textContent = planeGame.health;
-            }
-            
-            // بدء اللعبة
-            window.startGame = function() {
-                if (gameActive) return;
-                
-                gameActive = true;
-                planeGame = {
-                    score: 0,
-                    enemies: 10,
-                    health: 100,
-                    planeLevel: 1,
-                    bullets: []
-                };
-                enemies = [];
-                powerUps = [];
-                
-                updateGameStats();
-                
-                gameInterval = setInterval(gameLoop, 1000/60);
-                document.querySelector('.game-controls .btn-primary').innerHTML = '<i class="fas fa-play"></i> اللعبة تعمل';
-            };
-            
-            // إيقاف اللعبة
-            window.pauseGame = function() {
-                gameActive = !gameActive;
-                document.querySelector('.game-controls .btn-primary').innerHTML = 
-                    gameActive ? '<i class="fas fa-play"></i> اللعبة تعمل' : '<i class="fas fa-play"></i> استئناف';
-            };
-            
-            // ترقية الطائرة
-            window.upgradePlane = function() {
-                if (userBalance < 500) {
-                    alert('رصيدك غير كافي للترقية!');
-                    return;
-                }
-                
-                if (planeGame.planeLevel >= 5) {
-                    alert('وصلت لأقصى مستوى!');
-                    return;
-                }
-                
-                userBalance -= 500;
-                planeGame.planeLevel++;
-                plane.width += 5;
-                plane.height += 5;
-                document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-                
-                alert(`تم ترقية الطائرة للمستوى ${planeGame.planeLevel}!`);
-            };
-            
-            // انتهاء اللعبة
-            function endGame() {
-                gameActive = false;
-                clearInterval(gameInterval);
-                alert(`انتهت اللعبة! النقاط: ${planeGame.score}`);
-                
-                // مكافأة النقاط
-                if (planeGame.score > 0) {
-                    const reward = Math.floor(planeGame.score / 10);
-                    userBalance += reward;
-                    document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-                    alert(`حصلت على ${reward} نقطة مكافأة!`);
-                }
-            }
-            
-            // الفوز باللعبة
-            function winGame() {
-                gameActive = false;
-                clearInterval(gameInterval);
-                
-                const reward = 2000;
-                userBalance += reward;
-                planeGame.score += reward;
-                document.getElementById('userBalance').textContent = userBalance.toLocaleString();
-                updateGameStats();
-                
-                alert(`مبروك! فزت باللعبة! ربحت ${reward} نقطة إضافية!`);
+            if (isAutoCashout) {
+                btn.innerHTML = '<i class="fas fa-robot"></i> إيقاف التلقائي';
+                btn.style.background = 'var(--danger)';
+                alert(`تم تفعيل السحب التلقائي عند ${autoCashoutValue.toFixed(1)}x`);
+            } else {
+                btn.innerHTML = '<i class="fas fa-robot"></i> رهان تلقائي';
+                btn.style.background = 'var(--secondary)';
+                alert('تم إيقاف السحب التلقائي');
             }
         }
         
-        // تحديث الرصيد
-        function updateBalance(amount) {
-            userBalance += amount;
-            document.getElementById('userBalance').textContent = userBalance.toLocaleString();
+        // مضاعفة الرهان
+        function doubleBet() {
+            const currentAmount = parseInt(document.getElementById('betAmount').value);
+            document.getElementById('betAmount').value = currentAmount * 2;
+        }
+        
+        // إضافة رصيد
+        function addFunds() {
+            const amount = parseInt(prompt('كم نقطة تريد إضافتها؟'));
+            if (amount && amount > 0) {
+                balance += amount;
+                updateDisplay();
+                alert(`تم إضافة ${amount.toLocaleString()} نقطة لرصيدك`);
+            }
         }
     </script>
 </body>
