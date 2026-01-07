@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة صاروخ الجائزة - Rocket Prize</title>
+    <title>لعبة الصاروخ - احصل على الجائزة الكبرى!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,174 +14,224 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 100%);
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 100%);
             color: #fff;
             min-height: 100vh;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
         
-        .game-container {
-            max-width: 1000px;
+        .container {
+            max-width: 1200px;
             width: 100%;
-            background: rgba(0, 5, 20, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
-            border: 2px solid #00ccff;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         
+        /* رأس اللعبة */
         .header {
-            background: linear-gradient(to right, #002244, #004488);
+            background: linear-gradient(90deg, #ff3b3b 0%, #ff6b6b 100%);
+            border-radius: 15px;
             padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #ffcc00;
+            box-shadow: 0 10px 20px rgba(255, 59, 59, 0.3);
             position: relative;
+            overflow: hidden;
         }
         
-        .jackpot {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: #ffcc00;
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
-            letter-spacing: 2px;
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
+        }
+        
+        .jackpot-title {
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: #fff;
         }
         
-        .jackpot-label {
-            font-size: 1.3rem;
-            color: #66ccff;
-            letter-spacing: 1px;
+        .jackpot-amount {
+            font-size: 48px;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            letter-spacing: 2px;
         }
         
+        /* منطقة اللعبة الرئيسية */
         .game-area {
             display: flex;
-            padding: 25px;
-            gap: 25px;
-            position: relative;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         
-        .multipliers-section {
+        .left-panel {
             flex: 1;
+            min-width: 300px;
+            background: rgba(20, 20, 50, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .multipliers {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
         
         .multiplier {
-            background: linear-gradient(145deg, #112255, #223377);
+            background: linear-gradient(135deg, #2a2a5a 0%, #1e1e44 100%);
             border-radius: 10px;
-            padding: 20px 10px;
+            padding: 15px 10px;
             text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffcc00;
-            border: 2px solid #00aaff;
-            box-shadow: 0 5px 15px rgba(0, 50, 255, 0.3);
+            font-weight: 700;
+            font-size: 22px;
+            color: #ffd700;
+            border: 2px solid #3a3a6a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .multiplier:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 100, 255, 0.5);
         }
         
         .multiplier.active {
-            background: linear-gradient(145deg, #ff6600, #ff9900);
-            color: #fff;
-            border-color: #ffcc00;
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.7);
-            animation: pulse 1.5s infinite;
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            transform: scale(1.05);
         }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.7); }
-            50% { box-shadow: 0 0 25px rgba(255, 204, 0, 0.9); }
-            100% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.7); }
+        .multiplier.high {
+            color: #ff6b6b;
         }
         
-        .multiplier-label {
-            font-size: 0.9rem;
-            color: #aaccff;
-            margin-top: 5px;
+        .payout-box {
+            background: linear-gradient(135deg, #2a5a2a 0%, #1e441e 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #3a6a3a;
         }
         
-        .rocket-section {
-            flex: 2;
+        .payout-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #aaffaa;
+        }
+        
+        .payout-amount {
+            font-size: 36px;
+            font-weight: 900;
+            color: #aaffaa;
+        }
+        
+        .stats {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: #ffd700;
+            font-size: 22px;
+        }
+        
+        /* منطقة الصاروخ */
+        .rocket-area {
+            flex: 2;
+            min-width: 500px;
+            background: rgba(10, 10, 30, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             position: relative;
-            min-height: 400px;
+            overflow: hidden;
+            min-height: 500px;
         }
         
         .rocket-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border-radius: 10px;
-            background: linear-gradient(to bottom, #001122, #003344);
-            border: 2px solid #0088cc;
-        }
-        
-        .rocket {
             position: absolute;
-            bottom: 30px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 120px;
-            transition: bottom 0.1s linear;
+            transition: all 0.1s linear;
             z-index: 10;
         }
         
-        .rocket-body {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #ff3300, #ff6600);
-            border-radius: 10px 10px 5px 5px;
+        .rocket {
+            width: 80px;
+            height: 120px;
             position: relative;
-            border: 2px solid #ffcc00;
         }
         
-        .rocket-nose {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
+        .rocket-body {
+            width: 60px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff3b3b 0%, #ff6b6b 100%);
+            border-radius: 10px 10px 5px 5px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .rocket-top {
             width: 0;
             height: 0;
             border-left: 30px solid transparent;
             border-right: 30px solid transparent;
-            border-bottom: 25px solid #ff5500;
+            border-bottom: 40px solid #ff6b6b;
+            position: absolute;
+            top: -40px;
+            left: 0;
+        }
+        
+        .rocket-window {
+            width: 25px;
+            height: 25px;
+            background: #87ceeb;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid #1a1a3e;
         }
         
         .rocket-fin {
             position: absolute;
-            bottom: -15px;
-            width: 20px;
-            height: 30px;
-            background: #ff3300;
+            bottom: 0;
+            width: 15px;
+            height: 40px;
+            background: #ff3b3b;
             border-radius: 5px;
         }
         
         .fin-left {
-            left: -15px;
-            transform: skewY(30deg);
+            left: 0;
+            transform: skew(10deg);
         }
         
         .fin-right {
-            right: -15px;
-            transform: skewY(-30deg);
+            right: 0;
+            transform: skew(-10deg);
         }
         
         .flame {
@@ -189,18 +239,18 @@
             bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 30px;
-            height: 50px;
-            background: linear-gradient(to bottom, #ffff00, #ff3300);
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ffd700, #ff4500, #8b0000);
             border-radius: 50% 50% 20% 20%;
-            filter: blur(3px);
-            opacity: 0.9;
-            animation: flameFlicker 0.2s infinite alternate;
+            animation: flame-animation 0.2s infinite alternate;
+            filter: blur(2px);
+            opacity: 0.8;
         }
         
-        @keyframes flameFlicker {
-            0% { height: 40px; background: linear-gradient(to bottom, #ffff00, #ff3300); }
-            100% { height: 60px; background: linear-gradient(to bottom, #ffff00, #ff5500); }
+        @keyframes flame-animation {
+            0% { height: 60px; opacity: 0.8; }
+            100% { height: 70px; opacity: 1; }
         }
         
         .explosion {
@@ -208,577 +258,666 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: radial-gradient(circle, #ffff00 0%, #ff3300 70%, transparent 100%);
+            background: radial-gradient(circle, #ffd700 0%, #ff4500 50%, transparent 70%);
             opacity: 0;
             pointer-events: none;
-            z-index: 5;
+            z-index: 20;
         }
         
-        .flight-path {
+        .sky {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            z-index: 1;
         }
         
-        .path-line {
+        .star {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0, 200, 255, 0.3), transparent);
-        }
-        
-        .milestone {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: #00aaff;
+            background-color: white;
             border-radius: 50%;
-            border: 2px solid white;
         }
         
-        .milestone-label {
+        .cloud {
             position: absolute;
-            left: calc(50% + 15px);
-            color: #66ccff;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        
-        .controls-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .bet-controls {
-            background: rgba(0, 20, 60, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #0088cc;
-        }
-        
-        .section-title {
-            font-size: 1.4rem;
-            color: #66ccff;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .bet-amount {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .bet-label {
-            font-size: 1.1rem;
-            color: #aaccff;
-        }
-        
-        .bet-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        
-        .coins-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-        
-        .coin {
-            width: 60px;
-            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            opacity: 0.5;
         }
         
-        .coin:hover {
-            transform: scale(1.1);
-        }
-        
-        .coin.selected {
-            border-color: #ffcc00;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
-        }
-        
-        .coin-1 { background: linear-gradient(145deg, #777777, #999999); color: #fff; }
-        .coin-2 { background: linear-gradient(145deg, #b8860b, #daa520); color: #fff; }
-        .coin-3 { background: linear-gradient(145deg, #c0c0c0, #e0e0e0); color: #333; }
-        .coin-4 { background: linear-gradient(145deg, #ffd700, #ffed4e); color: #333; }
-        .coin-5 { background: linear-gradient(145deg, #0055aa, #0077ff); color: #fff; }
-        
-        .buttons-container {
+        /* لوحة التحكم */
+        .controls {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-top: 20px;
         }
         
-        .btn {
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .bet-controls {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            background: rgba(20, 20, 50, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .bet-buttons {
+            display: flex;
             gap: 10px;
         }
         
-        .btn-primary {
-            background: linear-gradient(to right, #00aa44, #00cc66);
-            color: white;
+        .bet-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #3a3a6a 0%, #2a2a5a 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .btn-primary:hover {
-            background: linear-gradient(to right, #00cc66, #00ee88);
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.5);
+        .bet-btn:hover {
+            background: linear-gradient(135deg, #4a4a8a 0%, #3a3a7a 100%);
+            transform: translateY(-2px);
         }
         
-        .btn-secondary {
-            background: linear-gradient(to right, #ff5500, #ff7700);
-            color: white;
+        .bet-btn.active {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff3b3b 100%);
+            box-shadow: 0 0 10px rgba(255, 59, 59, 0.7);
         }
         
-        .btn-secondary:hover {
-            background: linear-gradient(to right, #ff7700, #ff9900);
-            box-shadow: 0 0 20px rgba(255, 100, 0, 0.5);
+        .bet-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd700;
         }
         
-        .btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-        
-        .results-panel {
-            background: rgba(0, 30, 70, 0.8);
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #0088cc;
-        }
-        
-        .current-multiplier {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ffcc00;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
-            height: 70px;
+        .action-controls {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 15px;
         }
         
-        .payout-display {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #66ff99;
-            margin-top: 10px;
-            min-height: 30px;
-        }
-        
-        .status-message {
-            text-align: center;
-            margin-top: 15px;
-            color: #aaccff;
-            font-size: 1.1rem;
-            min-height: 25px;
-        }
-        
-        .footer {
-            padding: 15px;
-            text-align: center;
-            background: rgba(0, 10, 30, 0.9);
-            border-top: 2px solid #0088cc;
-            color: #88aaff;
-            font-size: 0.9rem;
-        }
-        
-        .instructions {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0, 20, 50, 0.7);
+        .action-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
             border-radius: 10px;
-            border: 1px solid #00aaff;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         
+        .launch-btn {
+            background: linear-gradient(135deg, #00cc66 0%, #00aa44 100%);
+            color: white;
+        }
+        
+        .launch-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #00dd77 0%, #00bb55 100%);
+            box-shadow: 0 0 15px rgba(0, 204, 102, 0.5);
+        }
+        
+        .take-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #333;
+        }
+        
+        .take-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ffe733 0%, #ffbb33 100%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .balance-area {
+            background: rgba(20, 20, 50, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 22px;
+        }
+        
+        .balance-label {
+            color: #aaffaa;
+        }
+        
+        .balance-amount {
+            font-weight: 900;
+            color: #ffd700;
+            font-size: 28px;
+        }
+        
+        /* تأثيرات */
+        .coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #daa520);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            color: #996600;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+        
+        /* رسائل */
+        .message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff3b3b 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .message.show {
+            opacity: 1;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
         @media (max-width: 900px) {
             .game-area {
                 flex-direction: column;
             }
             
-            .multipliers-section {
-                order: 3;
+            .rocket-area {
+                min-width: 100%;
+                min-height: 400px;
             }
             
-            .rocket-section {
-                order: 1;
-                min-height: 300px;
+            .multipliers {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .multipliers {
+                grid-template-columns: repeat(3, 1fr);
             }
             
-            .controls-section {
-                order: 2;
+            .bet-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .action-controls {
+                flex-direction: column;
+            }
+            
+            .jackpot-amount {
+                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
+    <div class="container">
+        <!-- رأس اللعبة -->
         <div class="header">
-            <div class="jackpot-label">الجائزة الكبرى</div>
-            <div class="jackpot" id="jackpot">910,244</div>
+            <div class="jackpot-title">الجائزة الكبرى</div>
+            <div class="jackpot-amount" id="jackpot">910,244</div>
         </div>
         
+        <!-- منطقة اللعبة -->
         <div class="game-area">
-            <div class="multipliers-section">
-                <!-- المضاعفات ستتم إضافتها بواسطة الجافاسكريبت -->
+            <!-- اللوحة اليسرى - المضاعفات -->
+            <div class="left-panel">
+                <div class="multipliers" id="multipliers">
+                    <!-- سيتم تعبئتها بواسطة الجافاسكريبت -->
+                </div>
+                
+                <div class="payout-box">
+                    <div class="payout-title">المكسب</div>
+                    <div class="payout-amount" id="payout">2.25X</div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div>المضاعف الحالي</div>
+                        <div class="stat-value" id="currentMultiplier">1.00X</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>الارتفاع</div>
+                        <div class="stat-value" id="altitude">0 م</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>السرعة</div>
+                        <div class="stat-value" id="speed">0 كم/س</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="rocket-section">
-                <div class="rocket-container">
-                    <div class="flight-path">
-                        <div class="path-line"></div>
-                        <!-- النقاط المرجعية على مسار الصاروخ -->
-                        <div class="milestone" style="top: 10%;"></div>
-                        <div class="milestone-label" style="top: 9%;">1x</div>
-                        
-                        <div class="milestone" style="top: 30%;"></div>
-                        <div class="milestone-label" style="top: 29%;">5x</div>
-                        
-                        <div class="milestone" style="top: 50%;"></div>
-                        <div class="milestone-label" style="top: 49%;">10x</div>
-                        
-                        <div class="milestone" style="top: 70%;"></div>
-                        <div class="milestone-label" style="top: 69%;">25x</div>
-                        
-                        <div class="milestone" style="top: 90%;"></div>
-                        <div class="milestone-label" style="top: 89%;">50x</div>
-                    </div>
-                    
-                    <!-- الصاروخ -->
+            <!-- منطقة الصاروخ -->
+            <div class="rocket-area">
+                <div class="sky" id="sky">
+                    <!-- النجوم والسحب ستضاف بواسطة الجافاسكريبت -->
+                </div>
+                
+                <div class="rocket-container" id="rocketContainer">
                     <div class="rocket" id="rocket">
+                        <div class="rocket-top"></div>
                         <div class="rocket-body">
-                            <div class="rocket-nose"></div>
-                            <div class="rocket-fin fin-left"></div>
-                            <div class="rocket-fin fin-right"></div>
+                            <div class="rocket-window"></div>
                         </div>
+                        <div class="rocket-fin fin-left"></div>
+                        <div class="rocket-fin fin-right"></div>
                         <div class="flame" id="flame"></div>
                     </div>
-                    
-                    <!-- تأثير الانفجار -->
-                    <div class="explosion" id="explosion"></div>
                 </div>
                 
-                <div class="status-message" id="statusMessage">اختر قيمة العملة وابدأ اللعب!</div>
-            </div>
-            
-            <div class="controls-section">
-                <div class="bet-controls">
-                    <div class="section-title">المضاعفات والرهان</div>
-                    
-                    <div class="bet-amount">
-                        <div class="bet-label">الرهان الحالي:</div>
-                        <div class="bet-value" id="currentBet">0</div>
-                    </div>
-                    
-                    <div class="coins-container">
-                        <div class="coin coin-1 selected" data-value="1">1</div>
-                        <div class="coin coin-2" data-value="5">5</div>
-                        <div class="coin coin-3" data-value="10">10</div>
-                        <div class="coin coin-4" data-value="50">50</div>
-                        <div class="coin coin-5" data-value="100">100</div>
-                    </div>
-                    
-                    <div class="buttons-container">
-                        <button class="btn btn-primary" id="launchBtn">
-                            <i class="fas fa-rocket"></i> إطلاق الصاروخ
-                        </button>
-                        <button class="btn btn-secondary" id="cashoutBtn" disabled>
-                            <i class="fas fa-money-bill-wave"></i> سحب الأرباح
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="results-panel">
-                    <div class="section-title">المضاعف الحالي</div>
-                    <div class="current-multiplier" id="currentMultiplier">1.00X</div>
-                    <div class="payout-display" id="payoutDisplay">المكسب: 0</div>
-                </div>
+                <!-- منطقة الانفجار -->
+                <div class="explosion" id="explosion"></div>
             </div>
         </div>
         
-        <div class="footer">
-            <p>لعبة صاروخ الجائزة - جميع الحقوق محفوظة &copy; 2023</p>
+        <!-- لوحة التحكم -->
+        <div class="controls">
+            <div class="bet-controls">
+                <div class="bet-buttons">
+                    <button class="bet-btn" data-bet="50">50</button>
+                    <button class="bet-btn" data-bet="200">200</button>
+                    <button class="bet-btn active" data-bet="500">500</button>
+                    <button class="bet-btn" data-bet="1000">1K</button>
+                </div>
+                <div class="bet-amount" id="betAmount">500</div>
+            </div>
             
-            <div class="instructions">
-                <h4>طريقة اللعب:</h4>
-                <ol>
-                    <li>اختر قيمة العملة التي تريد الرهان بها</li>
-                    <li>انقر على "إطلاق الصاروخ" لبدء اللعبة</li>
-                    <li>يرتفع الصاروخ ويزيد المضاعف كلما ارتفع</li>
-                    <li>انقر على "سحب الأرباح" قبل أن ينفجر الصاروخ لتحقيق أرباحك</li>
-                    <li>إذا انفجر الصاروخ قبل السحب، تخسر رهانك</li>
-                </ol>
+            <div class="action-controls">
+                <button class="action-btn launch-btn" id="launchBtn">
+                    <i class="fas fa-rocket"></i> إطلاق الصاروخ
+                </button>
+                <button class="action-btn take-btn" id="takeBtn" disabled>
+                    <i class="fas fa-hand-holding-usd"></i> سحب المكسب
+                </button>
+            </div>
+            
+            <div class="balance-area">
+                <div class="balance-label">رصيدك:</div>
+                <div class="balance-amount" id="balance">10,000</div>
             </div>
         </div>
     </div>
+    
+    <!-- رسائل -->
+    <div class="message" id="message"></div>
 
     <script>
         // بيانات اللعبة
-        const multipliers = [2.61, 1.65, 2.52, 1.83, 2.98, 10.89, 3.80, 1.26, 1.01];
-        const gameState = {
+        const gameData = {
             balance: 10000,
-            currentBet: 0,
-            coinValue: 1,
-            isPlaying: false,
-            currentMultiplier: 1.00,
-            cashoutMultiplier: 1.00,
-            rocketPosition: 0,
-            explosionPoint: null,
-            rocketSpeed: 2,
-            gameInterval: null,
-            isExploded: false
+            currentBet: 500,
+            jackpot: 910244,
+            currentMultiplier: 1.0,
+            altitude: 0,
+            speed: 0,
+            isFlying: false,
+            isExploded: false,
+            canTakeProfit: false,
+            maxAltitude: 10000,
+            explosionPoint: 0,
+            multipliers: [2.61, 1.65, 2.52, 1.83, 2.98, 10.89, 3.80, 1.26, 1.01]
         };
         
-        // عناصر DOM
-        const jackpotElement = document.getElementById('jackpot');
-        const currentBetElement = document.getElementById('currentBet');
-        const currentMultiplierElement = document.getElementById('currentMultiplier');
-        const payoutDisplayElement = document.getElementById('payoutDisplay');
-        const statusMessageElement = document.getElementById('statusMessage');
-        const rocketElement = document.getElementById('rocket');
-        const flameElement = document.getElementById('flame');
-        const explosionElement = document.getElementById('explosion');
+        // العناصر الرئيسية في DOM
+        const balanceEl = document.getElementById('balance');
+        const betAmountEl = document.getElementById('betAmount');
+        const jackpotEl = document.getElementById('jackpot');
+        const payoutEl = document.getElementById('payout');
+        const currentMultiplierEl = document.getElementById('currentMultiplier');
+        const altitudeEl = document.getElementById('altitude');
+        const speedEl = document.getElementById('speed');
+        const multipliersContainer = document.getElementById('multipliers');
+        const rocketContainer = document.getElementById('rocketContainer');
+        const rocket = document.getElementById('rocket');
+        const flame = document.getElementById('flame');
+        const explosion = document.getElementById('explosion');
+        const sky = document.getElementById('sky');
         const launchBtn = document.getElementById('launchBtn');
-        const cashoutBtn = document.getElementById('cashoutBtn');
-        const coins = document.querySelectorAll('.coin');
-        const multipliersSection = document.querySelector('.multipliers-section');
+        const takeBtn = document.getElementById('takeBtn');
+        const betButtons = document.querySelectorAll('.bet-btn');
+        const messageEl = document.getElementById('message');
         
-        // تهيئة المضاعفات
-        function initMultipliers() {
-            multipliersSection.innerHTML = '';
-            multipliers.forEach((multiplier, index) => {
-                const multiplierElement = document.createElement('div');
-                multiplierElement.className = 'multiplier';
-                multiplierElement.innerHTML = `
-                    <div class="multiplier-value">${multiplier}X</div>
-                    <div class="multiplier-label">مضاعف ${index + 1}</div>
-                `;
-                multipliersSection.appendChild(multiplierElement);
+        // تهيئة اللعبة
+        function initGame() {
+            updateUI();
+            createMultipliers();
+            createStarsAndClouds();
+            setupEventListeners();
+        }
+        
+        // إنشاء المضاعفات
+        function createMultipliers() {
+            multipliersContainer.innerHTML = '';
+            
+            gameData.multipliers.forEach(mult => {
+                const multiplierEl = document.createElement('div');
+                multiplierEl.className = 'multiplier';
+                if (mult > 5) multiplierEl.classList.add('high');
+                multiplierEl.textContent = `${mult.toFixed(2)}X`;
+                multipliersContainer.appendChild(multiplierEl);
             });
         }
         
-        // تحديث واجهة اللعبة
+        // إنشاء النجوم والسحب
+        function createStarsAndClouds() {
+            // إنشاء النجوم
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                sky.appendChild(star);
+            }
+            
+            // إنشاء السحب
+            for (let i = 0; i < 10; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                const size = Math.random() * 100 + 50;
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size / 2}px`;
+                cloud.style.left = `${Math.random() * 100}%`;
+                cloud.style.top = `${Math.random() * 30}%`;
+                sky.appendChild(cloud);
+            }
+        }
+        
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // أزرار الرهان
+            betButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const bet = parseInt(btn.dataset.bet);
+                    setBet(bet);
+                });
+            });
+            
+            // زر الإطلاق
+            launchBtn.addEventListener('click', launchRocket);
+            
+            // زر السحب
+            takeBtn.addEventListener('click', takeProfit);
+        }
+        
+        // تحديث واجهة المستخدم
         function updateUI() {
-            currentBetElement.textContent = gameState.currentBet;
-            currentMultiplierElement.textContent = gameState.currentMultiplier.toFixed(2) + 'X';
+            balanceEl.textContent = gameData.balance.toLocaleString();
+            betAmountEl.textContent = gameData.currentBet.toLocaleString();
+            jackpotEl.textContent = gameData.jackpot.toLocaleString();
+            payoutEl.textContent = `${gameData.currentMultiplier.toFixed(2)}X`;
+            currentMultiplierEl.textContent = `${gameData.currentMultiplier.toFixed(2)}X`;
+            altitudeEl.textContent = `${Math.floor(gameData.altitude)} م`;
+            speedEl.textContent = `${Math.floor(gameData.speed)} كم/س`;
             
-            const potentialPayout = gameState.currentBet * gameState.currentMultiplier;
-            payoutDisplayElement.textContent = `المكسب: ${Math.floor(potentialPayout)}`;
+            // تحديث حالة الأزرار
+            launchBtn.disabled = gameData.isFlying || gameData.balance < gameData.currentBet;
+            takeBtn.disabled = !gameData.canTakeProfit;
             
-            // تحديث وضع أزرار التحكم
-            launchBtn.disabled = gameState.isPlaying || gameState.currentBet <= 0;
-            cashoutBtn.disabled = !gameState.isPlaying || gameState.isExploded;
-            
-            // تحديث حالة الصاروخ
-            const rocketBottom = 30 + (gameState.rocketPosition * 2.6);
-            rocketElement.style.bottom = `${rocketBottom}px`;
-            
-            // تحديث الرسالة التوضيحية
-            if (gameState.isExploded) {
-                statusMessageElement.textContent = 'انفجر الصاروخ! خسرت رهانك.';
-            } else if (gameState.isPlaying) {
-                statusMessageElement.textContent = 'الصاروخ في الجو! اضغط سحب الأرباح قبل الانفجار!';
-            } else if (gameState.currentBet > 0) {
-                statusMessageElement.textContent = 'جاهز للإطلاق! اضغط على "إطلاق الصاروخ"';
-            } else {
-                statusMessageElement.textContent = 'اختر قيمة العملة وابدأ اللعب!';
-            }
-        }
-        
-        // اختيار قيمة العملة
-        coins.forEach(coin => {
-            coin.addEventListener('click', () => {
-                if (gameState.isPlaying) return;
-                
-                coins.forEach(c => c.classList.remove('selected'));
-                coin.classList.add('selected');
-                
-                gameState.coinValue = parseInt(coin.getAttribute('data-value'));
-                gameState.currentBet = gameState.coinValue;
-                updateUI();
+            // تحديث أزرار الرهان
+            betButtons.forEach(btn => {
+                const bet = parseInt(btn.dataset.bet);
+                if (bet === gameData.currentBet) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
-        });
+        }
         
-        // بدء اللعبة
-        launchBtn.addEventListener('click', () => {
-            if (gameState.isPlaying || gameState.currentBet <= 0) return;
+        // تعيين قيمة الرهان
+        function setBet(bet) {
+            if (gameData.isFlying) return;
             
-            // تحديد نقطة الانفجار بشكل عشوائي
-            gameState.explosionPoint = Math.random() * 90 + 10; // بين 10% و 100%
-            gameState.isPlaying = true;
-            gameState.isExploded = false;
-            gameState.currentMultiplier = 1.00;
-            gameState.rocketPosition = 0;
-            gameState.rocketSpeed = 2;
-            
-            flameElement.style.display = 'block';
-            explosionElement.style.opacity = '0';
-            
-            // بدء حركة الصاروخ
-            gameState.gameInterval = setInterval(updateRocket, 50);
-            updateUI();
-        });
-        
-        // سحب الأرباح
-        cashoutBtn.addEventListener('click', () => {
-            if (!gameState.isPlaying || gameState.isExploded) return;
-            
-            cashout();
-        });
-        
-        // تحديث حركة الصاروخ
-        function updateRocket() {
-            if (!gameState.isPlaying) return;
-            
-            // زيادة ارتفاع الصاروخ
-            gameState.rocketPosition += gameState.rocketSpeed;
-            
-            // زيادة المضاعف مع الارتفاع (بمعدل متسارع)
-            gameState.currentMultiplier = 1 + (gameState.rocketPosition / 10);
-            
-            // زيادة السرعة مع الوقت
-            gameState.rocketSpeed *= 1.005;
-            
-            // التحقق من وصول الصاروخ لنقطة الانفجار
-            if (gameState.rocketPosition >= gameState.explosionPoint) {
-                explodeRocket();
-            }
-            
-            // التحقق من وصول الصاروخ لأعلى نقطة
-            if (gameState.rocketPosition >= 100) {
-                cashout();
-            }
-            
+            gameData.currentBet = bet;
             updateUI();
         }
         
-        // تفجير الصاروخ
-        function explodeRocket() {
-            gameState.isExploded = true;
-            gameState.isPlaying = false;
+        // إطلاق الصاروخ
+        function launchRocket() {
+            if (gameData.isFlying || gameData.balance < gameData.currentBet) return;
             
-            flameElement.style.display = 'none';
+            // خصم الرهان من الرصيد
+            gameData.balance -= gameData.currentBet;
+            
+            // إعادة تعيين بيانات اللعبة
+            gameData.isFlying = true;
+            gameData.isExploded = false;
+            gameData.canTakeProfit = false;
+            gameData.currentMultiplier = 1.0;
+            gameData.altitude = 0;
+            gameData.speed = 100;
+            
+            // تعيين نقطة الانفجار بشكل عشوائي
+            gameData.explosionPoint = Math.floor(Math.random() * 8000) + 1000;
+            
+            // إعادة تعيين الصاروخ
+            rocketContainer.style.bottom = '50px';
+            rocket.style.transform = 'rotate(0deg)';
+            flame.style.display = 'block';
+            explosion.style.opacity = '0';
+            
+            // إخفاء جميع العملات
+            document.querySelectorAll('.coin').forEach(coin => coin.remove());
+            
+            // تحديث واجهة المستخدم
+            updateUI();
+            
+            // بدء تحليق الصاروخ
+            flyRocket();
+            
+            // عرض رسالة
+            showMessage('تم إطلاق الصاروخ! حظاً موفقاً!');
+        }
+        
+        // تحليق الصاروخ
+        function flyRocket() {
+            if (!gameData.isFlying) return;
+            
+            // زيادة الارتفاع والسرعة
+            gameData.altitude += gameData.speed / 10;
+            gameData.speed += Math.random() * 20 - 5; // تغيير عشوائي في السرعة
+            
+            // تحديث المضاعف بناءً على الارتفاع
+            gameData.currentMultiplier = 1 + (gameData.altitude / 1000);
+            
+            // تحديث موقع الصاروخ
+            const rocketAreaHeight = document.querySelector('.rocket-area').offsetHeight;
+            const maxBottom = rocketAreaHeight - 200;
+            const newBottom = 50 + (gameData.altitude / gameData.maxAltitude) * maxBottom;
+            rocketContainer.style.bottom = `${newBottom}px`;
+            
+            // تدوير الصاروخ قليلاً لجعل الحركة أكثر واقعية
+            const rotation = Math.sin(gameData.altitude / 500) * 5;
+            rocket.style.transform = `rotate(${rotation}deg)`;
+            
+            // إنشاء عملات بشكل عشوائي أثناء التحليق
+            if (Math.random() < 0.1) {
+                createCoin();
+            }
+            
+            // التحقق من الانفجار
+            if (gameData.altitude >= gameData.explosionPoint && !gameData.isExploded) {
+                explodeRocket();
+                return;
+            }
+            
+            // تحديث واجهة المستخدم
+            updateUI();
+            
+            // الاستمرار في التحليق
+            setTimeout(flyRocket, 50);
+        }
+        
+        // انفجار الصاروخ
+        function explodeRocket() {
+            gameData.isExploded = true;
+            gameData.isFlying = false;
+            
+            // إخفاء اللهب
+            flame.style.display = 'none';
             
             // عرض تأثير الانفجار
-            explosionElement.style.opacity = '0.9';
-            explosionElement.style.left = '50%';
-            explosionElement.style.top = `${100 - gameState.rocketPosition}%`;
-            explosionElement.style.transform = 'translate(-50%, -50%)';
+            explosion.style.left = `${rocketContainer.offsetLeft + rocketContainer.offsetWidth / 2}px`;
+            explosion.style.top = `${rocketContainer.offsetTop + rocketContainer.offsetHeight / 2}px`;
+            explosion.style.opacity = '1';
+            explosion.style.transform = 'scale(0)';
             
-            // إخفاء الانفجار بعد ثانيتين
-            setTimeout(() => {
-                explosionElement.style.opacity = '0';
-            }, 2000);
+            // تأثير الانفجار المتدرج
+            let scale = 0;
+            const explodeInterval = setInterval(() => {
+                scale += 0.1;
+                explosion.style.transform = `scale(${scale})`;
+                
+                if (scale >= 1.5) {
+                    clearInterval(explodeInterval);
+                    explosion.style.opacity = '0';
+                    
+                    // السماح للمستخدم بسحب المكاسب إذا كان المضاعف جيد
+                    if (gameData.currentMultiplier >= 1.5) {
+                        gameData.canTakeProfit = true;
+                        takeBtn.disabled = false;
+                        showMessage(`انفجر الصاروخ! يمكنك سحب مكاسبك بمضاعف ${gameData.currentMultiplier.toFixed(2)}X`);
+                    } else {
+                        showMessage('انفجر الصاروخ! لم تحقق مكاسب كافية');
+                    }
+                }
+            }, 30);
             
-            // إيقاف حركة الصاروخ
-            clearInterval(gameState.gameInterval);
-            
-            // إظهار المضاعف الذي انفجر عنده الصاروخ
-            statusMessageElement.textContent = `انفجر الصاروخ عند المضاعف ${gameState.currentMultiplier.toFixed(2)}X`;
-            
-            // تحديث الجائزة الكبرى
-            updateJackpot();
-            
-            // إعادة تعيين الرهان
-            gameState.currentBet = 0;
-            
-            setTimeout(updateUI, 100);
+            // تحديث واجهة المستخدم
+            updateUI();
         }
         
-        // سحب الأرباح
-        function cashout() {
-            gameState.isPlaying = false;
+        // إنشاء عملة
+        function createCoin() {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
             
-            flameElement.style.display = 'none';
+            // قيمة العملة عشوائية
+            const coinValue = Math.floor(Math.random() * 5) + 1;
+            coin.textContent = `${coinValue * gameData.currentBet}`;
             
-            // إيقاف حركة الصاروخ
-            clearInterval(gameState.gameInterval);
+            // وضع عشوائي
+            const rocketArea = document.querySelector('.rocket-area');
+            const left = Math.random() * (rocketArea.offsetWidth - 60);
+            const top = Math.random() * (rocketArea.offsetHeight - 60);
             
-            // حساب الأرباح
-            const winnings = Math.floor(gameState.currentBet * gameState.currentMultiplier);
+            coin.style.left = `${left}px`;
+            coin.style.top = `${top}px`;
             
-            // تحديث الرصيد
-            gameState.balance += winnings;
+            // إضافة العملة إلى منطقة الصاروخ
+            rocketArea.appendChild(coin);
             
-            // عرض رسالة النجاح
-            statusMessageElement.textContent = `نجحت! سحبت ${winnings} عند المضاعف ${gameState.currentMultiplier.toFixed(2)}X`;
-            
-            // إظهار المضاعف النهائي باللون الأخضر
-            currentMultiplierElement.style.color = '#66ff99';
-            
-            // تحديث الجائزة الكبرى
-            updateJackpot();
-            
-            // إعادة تعيين الرهان
-            gameState.currentBet = 0;
-            
+            // إزالة العملة بعد فترة
             setTimeout(() => {
-                currentMultiplierElement.style.color = '#ffcc00';
-                updateUI();
+                if (coin.parentNode) {
+                    coin.parentNode.removeChild(coin);
+                }
             }, 3000);
         }
         
-        // تحديث الجائزة الكبرى
-        function updateJackpot() {
-            let currentJackpot = parseInt(jackpotElement.textContent.replace(/,/g, ''));
+        // سحب المكاسب
+        function takeProfit() {
+            if (!gameData.canTakeProfit) return;
             
-            // زيادة الجائزة الكبرى بنسبة صغيرة
-            const increase = Math.floor(Math.random() * 100) + 50;
-            currentJackpot += increase;
+            // حساب المكسب
+            const profit = Math.floor(gameData.currentBet * gameData.currentMultiplier);
             
-            // تنسيق الرقم بفواصل
-            jackpotElement.textContent = currentJackpot.toLocaleString();
-        }
-        
-        // تهيئة اللعبة عند تحميل الصفحة
-        window.addEventListener('DOMContentLoaded', () => {
-            initMultipliers();
+            // إضافة المكسب إلى الرصيد
+            gameData.balance += profit;
+            
+            // تحديث الجائزة الكبرى
+            gameData.jackpot += Math.floor(profit * 0.01);
+            
+            // إعادة تعيين حالة السحب
+            gameData.canTakeProfit = false;
+            
+            // تحديث واجهة المستخدم
             updateUI();
             
-            // اختيار أول عملة افتراضياً
-            coins[0].click();
-        });
-        
-        // إضافة تأثيرات صوتية (محاكاة)
-        function playSound(type) {
-            // في التطبيق الحقيقي، يمكن إضافة ملفات صوتية هنا
-            console.log(`تشغيل الصوت: ${type}`);
+            // عرض رسالة النجاح
+            showMessage(`مبروك! لقد ربحت ${profit.toLocaleString()} عملة بمضاعف ${gameData.currentMultiplier.toFixed(2)}X`);
+            
+            // إظهار تأثير العملات
+            createCoinRain(profit);
         }
+        
+        // إنشاء مطر من العملات
+        function createCoinRain(profit) {
+            const rocketArea = document.querySelector('.rocket-area');
+            const coinCount = Math.min(20, Math.floor(profit / 100));
+            
+            for (let i = 0; i < coinCount; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'coin';
+                    coin.textContent = `${Math.floor(profit / coinCount)}`;
+                    
+                    // وضع عشوائي في الأعلى
+                    const left = Math.random() * (rocketArea.offsetWidth - 60);
+                    coin.style.left = `${left}px`;
+                    coin.style.top = `-30px`;
+                    
+                    rocketArea.appendChild(coin);
+                    
+                    // تحريك العملة للأسفل
+                    let top = -30;
+                    const fallInterval = setInterval(() => {
+                        top += 5;
+                        coin.style.top = `${top}px`;
+                        
+                        if (top > rocketArea.offsetHeight) {
+                            clearInterval(fallInterval);
+                            if (coin.parentNode) {
+                                coin.parentNode.removeChild(coin);
+                            }
+                        }
+                    }, 30);
+                }, i * 100);
+            }
+        }
+        
+        // عرض رسالة
+        function showMessage(text) {
+            messageEl.textContent = text;
+            messageEl.classList.add('show');
+            
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
+        
+        // بدء اللعبة عند تحميل الصفحة
+        window.addEventListener('load', initGame);
     </script>
 </body>
 </html>
